@@ -1,0 +1,106 @@
+syntax = "proto3";
+package api.system.v1;
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import  "validate/validate.proto";
+import "user.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/terminator-coin/terminator/api/system/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System Project API"
+    version: "v1"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service ProjectService {
+  rpc CreateProject (CreateProjectRequest) returns (CreateProjectReply) {
+    option (google.api.http) = {
+      post: "/api/v1/project/"
+      body: "*"
+    };
+  }
+  rpc UpdateProject (UpdateProjectRequest) returns (UpdateProjectReply) {
+    option (google.api.http) = {
+      put: "/api/project/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/project/{id}"
+    };
+  }
+  rpc GetProject (GetProjectRequest) returns (GetProjectReply) {
+    option (google.api.http) = {
+      get: "/api/v1/project/{id}"
+    };
+  }
+  rpc ListProject (ListProjectRequest) returns (ListProjectReply) {
+    option (google.api.http) = {
+      get: "/api/v1/project/"
+    };
+  }
+}
+
+message Project {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  int64 members = 4;
+  repeated GetUserRequest user_id = 5;
+  int64 product_id = 6;
+}
+
+
+message CreateProjectRequest {
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  string description = 2 ;
+  int64 members = 3 ;
+  int64 user_id = 4;
+  int64 product_id = 5;
+}
+
+message CreateProjectReply {
+  Project project = 1;
+}
+
+message UpdateProjectRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  string description = 3 ;
+  int64 members = 4 ;
+  int64 user_id = 5;
+  int64 product_id = 6;
+}
+
+message UpdateProjectReply {
+  Project project = 1;
+}
+
+message DeleteProjectRequest {
+  int64 id = 1;
+}
+message DeleteProjectReply {
+}
+
+message GetProjectRequest {
+  int64 id = 1;
+}
+
+message GetProjectReply {
+  Project project = 1;
+}
+
+message ListProjectRequest {
+}
+
+message ListProjectReply {
+  repeated Project results = 1;
+}

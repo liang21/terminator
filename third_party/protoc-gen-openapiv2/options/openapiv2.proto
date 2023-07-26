@@ -28,7 +28,7 @@ enum Scheme {
 //      version: "1.0";
 //      description: ";
 //      contact: {
-//        name: "gRPC-Gateway project";
+//        name: "gRPC-Gateway Project";
 //        url: "https://github.com/grpc-ecosystem/grpc-gateway";
 //        email: "none@example.com";
 //      };
@@ -250,7 +250,7 @@ message Response {
 //      version: "1.0";
 //      description: ";
 //      contact: {
-//        name: "gRPC-Gateway project";
+//        name: "gRPC-Gateway Product";
 //        url: "https://github.com/grpc-ecosystem/grpc-gateway";
 //        email: "none@example.com";
 //      };
@@ -290,7 +290,7 @@ message Info {
 //    info: {
 //      ...
 //      contact: {
-//        name: "gRPC-Gateway project";
+//        name: "gRPC-Gateway Product";
 //        url: "https://github.com/grpc-ecosystem/grpc-gateway";
 //        email: "none@example.com";
 //      };

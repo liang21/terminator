@@ -1,0 +1,97 @@
+syntax = "proto3";
+package api.system.v1;
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import  "validate/validate.proto";
+import "user.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/terminator-coin/terminator/api/system/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System Project API"
+    version: "v1"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (CreateProductReply) {
+    option (google.api.http) = {
+      post: "/api/v1/product/"
+      body: "*"
+    };
+  }
+  rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductReply) {
+    option (google.api.http) = {
+      put: "/api/product/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/product/{id}"
+    };
+  }
+  rpc GetProduct (GetProductRequest) returns (GetProductReply) {
+    option (google.api.http) = {
+      get: "/api/v1/product/{id}"
+    };
+  }
+  rpc ListProduct (ListProductRequest) returns (ListProductReply) {
+    option (google.api.http) = {
+      get: "/api/v1/product/"
+    };
+  }
+}
+
+message Product {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+
+message CreateProductRequest {
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  string description = 2 ;
+}
+
+message CreateProductReply {
+  Product product = 1;
+}
+
+message UpdateProductRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  string description = 3 ;
+}
+
+message UpdateProductReply {
+  Product product = 1;
+}
+
+message DeleteProductRequest {
+  int64 id = 1;
+}
+message DeleteProductReply {
+}
+
+message GetProductRequest {
+  int64 id = 1;
+}
+
+message GetProductReply {
+  Product product = 1;
+}
+
+message ListProductRequest {
+}
+
+message ListProductReply {
+  repeated Product results = 1;
+}
