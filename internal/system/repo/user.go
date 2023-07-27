@@ -2,9 +2,7 @@ package repo
 
 import (
 	"context"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/liang21/terminator/internal/system/biz"
-	"github.com/redis/go-redis/v9"
 	"xorm.io/xorm"
 )
 
