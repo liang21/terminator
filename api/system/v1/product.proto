@@ -12,7 +12,7 @@ option go_package = "github.com/terminator-coin/terminator/api/system/v1;v1";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Terminator System Project API"
-    version: "v1"
+    version: "v1.0.0"
   }
   schemes: HTTP
   consumes: "application/json"
@@ -90,6 +90,9 @@ message GetProductReply {
 }
 
 message ListProductRequest {
+  string name = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  int32 page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
 }
 
 message ListProductReply {

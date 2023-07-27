@@ -12,7 +12,7 @@ option go_package = "github.com/terminator-coin/terminator/api/system/v1;v1";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Terminator System Project API"
-    version: "v1"
+    version: "v1.0.0"
   }
   schemes: HTTP
   consumes: "application/json"
@@ -54,7 +54,7 @@ message Project {
   string name = 2;
   string description = 3;
   int64 members = 4;
-  repeated GetUserRequest user_id = 5;
+  repeated int64 user_id = 5;
   int64 product_id = 6;
 }
 
@@ -63,7 +63,7 @@ message CreateProjectRequest {
   string name = 1 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
   string description = 2 ;
   int64 members = 3 ;
-  int64 user_id = 4;
+  repeated int64 user_id = 4;
   int64 product_id = 5;
 }
 
@@ -99,6 +99,9 @@ message GetProjectReply {
 }
 
 message ListProjectRequest {
+  string name = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  int32 page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
 }
 
 message ListProjectReply {
