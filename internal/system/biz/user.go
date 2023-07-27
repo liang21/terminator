@@ -32,3 +32,43 @@ type UserRepo interface {
 	GetUserLike(ctx context.Context, id int64) (rv int64, err error)
 	IncUserLike(ctx context.Context, id int64) error
 }
+
+type UserUsecase struct {
+	repo UserRepo
+}
+
+func NewUserUsecase(repo UserRepo) *UserUsecase {
+	return &UserUsecase{repo: repo}
+}
+
+func (uc *UserUsecase) List(ctx context.Context) (ps []*User, err error) {
+	ps, err = uc.repo.ListUser(ctx)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func (uc *UserUsecase) Get(ctx context.Context, id int64) (p *User, err error) {
+	p, err = uc.repo.GetUser(ctx, id)
+	if err != nil {
+		return
+	}
+	err = uc.repo.IncUserLike(ctx, id)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func (uc *UserUsecase) Create(ctx context.Context, User *User) error {
+	return uc.repo.CreateUser(ctx, User)
+}
+
+func (uc *UserUsecase) Update(ctx context.Context, id int64, user *User) error {
+	return uc.repo.UpdateUser(ctx, id, user)
+}
+
+func (uc *UserUsecase) Delete(ctx context.Context, id int64) error {
+	return uc.repo.DeleteUser(ctx, id)
+}
