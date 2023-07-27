@@ -1,10 +1,8 @@
 syntax = "proto3";
-package api.system.v1;
+package terminator.api.system.v1;
 
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
-import  "validate/validate.proto";
-import "user.proto";
+import "validate/validate.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/terminator-coin/terminator/api/system/v1;v1";
@@ -22,13 +20,13 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 service ProductService {
   rpc CreateProduct (CreateProductRequest) returns (CreateProductReply) {
     option (google.api.http) = {
-      post: "/api/v1/product/"
+      post: "/api/v1/product"
       body: "*"
     };
   }
   rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductReply) {
     option (google.api.http) = {
-      put: "/api/product/{id}"
+      put: "/api/v1/product/{id}"
       body: "*"
     };
   }
@@ -44,7 +42,7 @@ service ProductService {
   }
   rpc ListProduct (ListProductRequest) returns (ListProductReply) {
     option (google.api.http) = {
-      get: "/api/v1/product/"
+      get: "/api/v1/product/list"
     };
   }
 }

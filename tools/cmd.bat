@@ -1,0 +1,1 @@
+protoc -I . -I ./third_party --go_out=paths=source_relative:. --go-grpc_out . --go-grpc_opt paths=source_relative --validate_out="lang=go:."  --grpc-gateway_out . --grpc-gateway_opt logtostderr=true --grpc-gateway_opt paths=source_relative api/system/v1/*.proto
