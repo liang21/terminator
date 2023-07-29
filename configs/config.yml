@@ -1,0 +1,18 @@
+server:
+  http:
+    addr: 0.0.0.0:8001
+  grpc:
+    addr: 0.0.0.0:9001
+data:
+  mysql:
+    driver: mysql
+    host: localhost
+    port: 3306
+    username: root
+    password: 123456
+    database: terminator
+    max_idle_connections: 50
+    max_open_connections: 5
+    max_connection_life_time: 600
+    show_sql: true
+    log_level: info

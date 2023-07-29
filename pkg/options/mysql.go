@@ -1,15 +1,16 @@
-package db
+package options
 
 import (
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"time"
 	"xorm.io/xorm"
 	log2 "xorm.io/xorm/log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-type Options struct {
+type MysqlOptions struct {
 	Host                  string        `json:"host"`
 	Port                  int           `json:"port"`
 	Driver                string        `json:"driver"`
@@ -23,8 +24,8 @@ type Options struct {
 	LogLevel              int           `json:"log_level"`
 }
 
-// New create a new gorm db instance with the given options.
-func New(opts *Options) (*xorm.Engine, error) {
+// NewMysqlOptions New create a new gorm db instance with the given options.
+func NewMysqlOptions(opts *MysqlOptions) (*xorm.Engine, error) {
 	dsn := fmt.Sprintf(`%s:%s@tcp(%s:d%)/%s?charset=utf8&parseTime=%t&loc=%s`,
 		opts.Username,
 		opts.Password,
