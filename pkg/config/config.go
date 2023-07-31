@@ -17,4 +17,6 @@ type Addr struct {
 }
 type Data struct {
 	options.MysqlOptions
+	options.RedisOptions
+	options.MongoOptions
 }

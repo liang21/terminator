@@ -16,3 +16,20 @@ data:
     max_connection_life_time: 600
     show_sql: true
     log_level: info
+  redis:
+    addr: localhost:6379
+    password: 123456
+    db: 0
+    pool_size: 50
+    min_idle_connections: 10
+    max_idle_connections: 50
+    dial_timeout: 1s
+    read_timeout: 0.4s
+    write_timeout: 0.6s
+  mongo:
+    uri: mongodb://localhost:27017
+    database: terminator
+    connect_timeout_ms: 1
+    max_pool_size: 50
+    min_pool_size: 5
+    socket_timeout_ms: 1

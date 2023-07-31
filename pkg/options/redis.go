@@ -8,7 +8,6 @@ import (
 
 type RedisOptions struct {
 	Addr         string `json:"addr"`
-	Username     string `json:"username"`
 	Password     string `json:"password"`
 	Database     int    `json:"database"`
 	MaxIdle      int    `json:"max_idle"`
@@ -21,7 +20,6 @@ type RedisOptions struct {
 func NewRedisOptions(opts *RedisOptions) (*redis.Client, error) {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:         opts.Addr,
-		Username:     opts.Username,
 		Password:     opts.Password,
 		DB:           opts.Database,
 		PoolSize:     opts.MaxActive,
