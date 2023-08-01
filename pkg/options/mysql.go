@@ -26,7 +26,7 @@ type MysqlOptions struct {
 
 // NewMysqlOptions New create a new gorm db instance with the given options.
 func NewMysqlOptions(opts *MysqlOptions) (*xorm.Engine, error) {
-	dsn := fmt.Sprintf(`%s:%s@tcp(%s:d%)/%s?charset=utf8&parseTime=%t&loc=%s`,
+	dsn := fmt.Sprintf(`%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=%t&loc=%s`,
 		opts.Username,
 		opts.Password,
 		opts.Host,
@@ -48,6 +48,5 @@ func NewMysqlOptions(opts *MysqlOptions) (*xorm.Engine, error) {
 	// 日志相关配置
 	engine.ShowSQL(opts.ShowSQL)                     // 打印日志
 	engine.SetLogLevel(log2.LogLevel(opts.LogLevel)) // 打印日志级别
-	engine.SetLogger(nil)                            // 打印日志引擎
 	return engine, nil
 }

@@ -1,6 +1,7 @@
 package options
 
 import (
+	"context"
 	"github.com/redis/go-redis/v9"
 	"log"
 	"time"
@@ -10,8 +11,6 @@ type RedisOptions struct {
 	Addr         string `json:"addr"`
 	Password     string `json:"password"`
 	Database     int    `json:"database"`
-	MaxIdle      int    `json:"max_idle"`
-	MaxActive    int    `json:"max_active"`
 	DialTimeout  int    `json:"dial_timeout"`
 	WriteTimeout int    `json:"write_timeout"`
 	ReadTimeout  int    `json:"read_timeout"`
@@ -22,14 +21,18 @@ func NewRedisOptions(opts *RedisOptions) (*redis.Client, error) {
 		Addr:         opts.Addr,
 		Password:     opts.Password,
 		DB:           opts.Database,
-		PoolSize:     opts.MaxActive,
-		MaxIdleConns: opts.MaxIdle,
 		DialTimeout:  time.Duration(opts.DialTimeout),
 		WriteTimeout: time.Duration(opts.WriteTimeout),
 		ReadTimeout:  time.Duration(opts.ReadTimeout),
 	})
-	if err := rdb.Close(); err != nil {
-		log.Printf("init redis fail! err:%+v", err)
+	_, err := rdb.Ping(context.Background()).Result()
+	if err != nil {
+		log.Fatal("ping redis fail! err:", err)
 	}
+	defer func() {
+		if err = rdb.Close(); err != nil {
+			panic(err)
+		}
+	}()
 	return rdb, nil
 }
