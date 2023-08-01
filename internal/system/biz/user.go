@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"errors"
 	"time"
 )
 
@@ -49,20 +50,28 @@ func (uc *UserUsecase) List(ctx context.Context) (ps []*User, err error) {
 	return
 }
 
-func (uc *UserUsecase) Get(ctx context.Context, id int64) (p *User, err error) {
-	p, err = uc.repo.GetUser(ctx, id)
+func (uc *UserUsecase) Get(ctx context.Context, id int64) (user *User, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	user, err = uc.repo.GetUser(ctx, id)
 	if err != nil {
 		return
 	}
-	err = uc.repo.IncUserLike(ctx, id)
-	if err != nil {
-		return
-	}
-	return
+	return user, nil
 }
 
-func (uc *UserUsecase) Create(ctx context.Context, User *User) error {
-	return uc.repo.CreateUser(ctx, User)
+func (uc *UserUsecase) Create(ctx context.Context, user *User) error {
+	if user.Name == "" {
+		return errors.New("name is empty")
+	}
+	if user.Phone == "" {
+		return errors.New("phone is empty")
+	}
+	if user.Email == "" {
+		return errors.New("email is empty")
+	}
+	return uc.repo.CreateUser(ctx, user)
 }
 
 func (uc *UserUsecase) Update(ctx context.Context, id int64, user *User) error {
