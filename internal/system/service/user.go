@@ -22,15 +22,12 @@ func (u *UserService) ListUser(ctx context.Context, req *v1.ListUserRequest) (*v
 
 func (u *UserService) GetUser(ctx context.Context, req *v1.GetUserRequest) (*v1.GetUserReply, error) {
 	user, err := u.user.Get(ctx, req.GetId())
-	if err != nil {
-		return nil, err
-	}
-	return &v1.GetUserReply{User: &v1.User{Id: user.Id, Name: user.Name, Email: user.Email, Phone: user.Phone, RoleId: user.RoleId, Password: user.Password}}, nil
+	return &v1.GetUserReply{User: &v1.User{Id: user.Id, Name: user.Name, Email: user.Email, Phone: user.Phone, RoleId: user.RoleId, Password: user.Password}}, err
 }
 
 func (u *UserService) CreateUser(ctx context.Context, req *v1.CreateUserRequest) (*v1.CreateUserReply, error) {
-	//TODO implement me
-	return nil, nil
+	err := u.user.Create(ctx, &biz.User{Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
+	return &v1.CreateUserReply{}, err
 }
 
 func (u *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (*v1.UpdateUserReply, error) {
@@ -39,6 +36,6 @@ func (u *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest)
 }
 
 func (u *UserService) DeleteUser(ctx context.Context, req *v1.DeleteUserRequest) (*v1.DeleteUserReply, error) {
-	//TODO implement me
-	return nil, nil
+	err := u.user.Delete(ctx, req.GetId())
+	return &v1.DeleteUserReply{}, err
 }
