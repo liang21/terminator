@@ -34,9 +34,6 @@ type UserRepo interface {
 	CreateUser(ctx context.Context, user *User) error
 	UpdateUser(ctx context.Context, id int64, user *User) error
 	DeleteUser(ctx context.Context, id int64) error
-	// redis
-	GetUserLike(ctx context.Context, id int64) (rv int64, err error)
-	IncUserLike(ctx context.Context, id int64) error
 }
 
 type UserUsecase struct {

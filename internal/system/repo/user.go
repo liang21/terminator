@@ -87,13 +87,3 @@ func (u *userRepo) DeleteUser(ctx context.Context, id int64) error {
 	}
 	return nil
 }
-
-func (u userRepo) GetUserLike(ctx context.Context, id int64) (rv int64, err error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (u userRepo) IncUserLike(ctx context.Context, id int64) error {
-	//TODO implement me
-	panic("implement me")
-}
