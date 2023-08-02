@@ -4,6 +4,7 @@ import (
 	"context"
 	v1 "github.com/liang21/terminator/api/system/v1"
 	"github.com/liang21/terminator/internal/system/biz"
+	"github.com/liang21/terminator/pkg/pagination"
 )
 
 type UserService struct {
@@ -16,8 +17,20 @@ func NewUserService(user *biz.UserUsecase) *UserService {
 }
 
 func (u *UserService) ListUser(ctx context.Context, req *v1.ListUserRequest) (*v1.ListUserReply, error) {
-	//TODO implement me
-	return nil, nil
+	meta := pagination.ListMeta{
+		Name:     req.GetName(),
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	}
+	users, err := u.user.List(ctx, meta)
+	user := make([]*v1.User, 0, len(users.Items))
+	for _, item := range users.Items {
+		user = append(user, &v1.User{Id: item.Id, Name: item.Name, Email: item.Email, Phone: item.Phone, RoleId: item.RoleId, Password: item.Password})
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &v1.ListUserReply{Total: users.TotalCount, Results: user}, nil
 }
 
 func (u *UserService) GetUser(ctx context.Context, req *v1.GetUserRequest) (*v1.GetUserReply, error) {
@@ -27,7 +40,7 @@ func (u *UserService) GetUser(ctx context.Context, req *v1.GetUserRequest) (*v1.
 
 func (u *UserService) CreateUser(ctx context.Context, req *v1.CreateUserRequest) (*v1.CreateUserReply, error) {
 	err := u.user.Create(ctx, &biz.User{Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
-	return &v1.CreateUserReply{}, err
+	return &v1.CreateUserReply{User: &v1.User{Name: req.Name, Email: req.Email, Phone: req.Phone, RoleId: req.RoleId, Password: req.Password}}, err
 }
 
 func (u *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (*v1.UpdateUserReply, error) {

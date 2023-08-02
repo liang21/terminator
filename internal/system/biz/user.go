@@ -3,6 +3,7 @@ package biz
 import (
 	"context"
 	"errors"
+	"github.com/liang21/terminator/pkg/pagination"
 	"time"
 )
 
@@ -17,6 +18,10 @@ type User struct {
 	CreateAt time.Time `json:"create_at"`
 	UpdateAt time.Time `json:"update_at"`
 }
+type UserDTOList struct {
+	TotalCount int64   `json:"totalCount,omitempty"` //总数
+	Items      []*User `json:"data"`                 //数据
+}
 
 func (u User) TableName() string {
 	return "user"
@@ -24,7 +29,7 @@ func (u User) TableName() string {
 
 type UserRepo interface {
 	// db
-	ListUser(ctx context.Context) ([]*User, error)
+	ListUser(ctx context.Context, meta pagination.ListMeta) (userDto *UserDTOList, err error)
 	GetUser(ctx context.Context, id int64) (*User, error)
 	CreateUser(ctx context.Context, user *User) error
 	UpdateUser(ctx context.Context, id int64, user *User) error
@@ -42,12 +47,12 @@ func NewUserUsecase(repo UserRepo) *UserUsecase {
 	return &UserUsecase{repo: repo}
 }
 
-func (uc *UserUsecase) List(ctx context.Context) (ps []*User, err error) {
-	ps, err = uc.repo.ListUser(ctx)
+func (uc *UserUsecase) List(ctx context.Context, meta pagination.ListMeta) (userDtoList *UserDTOList, err error) {
+	userDtoList, err = uc.repo.ListUser(ctx, meta)
 	if err != nil {
 		return
 	}
-	return
+	return userDtoList, nil
 }
 
 func (uc *UserUsecase) Get(ctx context.Context, id int64) (user *User, err error) {
@@ -62,22 +67,19 @@ func (uc *UserUsecase) Get(ctx context.Context, id int64) (user *User, err error
 }
 
 func (uc *UserUsecase) Create(ctx context.Context, user *User) error {
-	if user.Name == "" {
-		return errors.New("name is empty")
-	}
-	if user.Phone == "" {
-		return errors.New("phone is empty")
-	}
-	if user.Email == "" {
-		return errors.New("email is empty")
-	}
 	return uc.repo.CreateUser(ctx, user)
 }
 
 func (uc *UserUsecase) Update(ctx context.Context, id int64, user *User) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
 	return uc.repo.UpdateUser(ctx, id, user)
 }
 
 func (uc *UserUsecase) Delete(ctx context.Context, id int64) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
 	return uc.repo.DeleteUser(ctx, id)
 }

@@ -29,10 +29,10 @@ func NewRedisOptions(opts *RedisOptions) (*redis.Client, error) {
 	if err != nil {
 		log.Fatal("ping redis fail! err:", err)
 	}
-	defer func() {
-		if err = rdb.Close(); err != nil {
-			panic(err)
-		}
-	}()
+	//defer func() {
+	//	if err = rdb.Close(); err != nil {
+	//		panic(err)
+	//	}
+	//}()
 	return rdb, nil
 }
