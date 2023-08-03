@@ -96,9 +96,8 @@ message GetUserReply {
 }
 
 message ListUserRequest {
-  string name = 1;
-  int64 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
-  int64 page = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+  int64 page_size = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  int64 page = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
 }
 
 message ListUserReply {

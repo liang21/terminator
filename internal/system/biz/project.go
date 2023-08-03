@@ -41,8 +41,8 @@ func NewProjectUsecase(repo ProjectRepo) *ProjectUsecase {
 }
 
 type ProjectDTOList struct {
-	Total int64      `json:"total"` //总数
-	Items []*Project `json:"items"` //数据
+	TotalCount int64      `json:"total"` //总数
+	Items      []*Project `json:"items"` //数据
 }
 
 func (uc *ProjectUsecase) List(ctx context.Context, meta pagination.ListMeta) (projectDtoList *ProjectDTOList, err error) {

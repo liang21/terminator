@@ -18,7 +18,6 @@ func NewUserService(user *biz.UserUsecase) *UserService {
 
 func (u *UserService) ListUser(ctx context.Context, req *v1.ListUserRequest) (*v1.ListUserReply, error) {
 	meta := pagination.ListMeta{
-		Name:     req.GetName(),
 		Page:     req.GetPage(),
 		PageSize: req.GetPageSize(),
 	}

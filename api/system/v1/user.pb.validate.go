@@ -1166,8 +1166,6 @@ func (m *ListUserRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Name
-
 	// no validation rules for PageSize
 
 	// no validation rules for Page

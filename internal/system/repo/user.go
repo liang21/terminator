@@ -30,9 +30,8 @@ func (u *userRepo) ListUser(ctx context.Context, meta pagination.ListMeta) (*biz
 	} else {
 		limit = meta.PageSize
 	}
-	name := &biz.User{Name: meta.Name, Delete: 0}
 	offset := pagination.GetPageOffset(meta.Page, meta.PageSize)
-	count, err := u.db.Where(name).Limit(int(limit), int(offset)).Desc("name").FindAndCount(&users)
+	count, err := u.db.Where("id = ?", 0).Limit(int(limit), int(offset)).Desc("name").FindAndCount(&users)
 	if err != nil {
 		return nil, err
 	}

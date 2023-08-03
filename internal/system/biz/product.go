@@ -38,8 +38,8 @@ func NewProductUsecase(repo ProductRepo) *ProductUsecase {
 }
 
 type ProductDTOList struct {
-	Total int64      `json:"total"` //总数
-	Items []*Project `json:"items"` //数据
+	TotalCount int64      `json:"total"` //总数
+	Items      []*Project `json:"items"` //数据
 }
 
 func (uc *ProductUsecase) List(ctx context.Context, meta pagination.ListMeta) (productDtoList *ProductDTOList, err error) {

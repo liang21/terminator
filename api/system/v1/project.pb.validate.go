@@ -1117,11 +1117,9 @@ func (m *ListProjectRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Name
-
 	// no validation rules for PageSize
 
-	// no validation rules for PageToken
+	// no validation rules for Page
 
 	if len(errors) > 0 {
 		return ListProjectRequestMultiError(errors)
@@ -1224,6 +1222,8 @@ func (m *ListProjectReply) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for Total
 
 	for idx, item := range m.GetResults() {
 		_, _ = idx, item
