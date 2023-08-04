@@ -38,12 +38,12 @@ func (u *ProjectService) GetProject(ctx context.Context, req *v1.GetProjectReque
 }
 
 func (u *ProjectService) CreateProject(ctx context.Context, req *v1.CreateProjectRequest) (*v1.CreateProjectReply, error) {
-	err := u.project.Create(ctx, &biz.Project{Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
-	return &v1.CreateProjectReply{Project: &v1.Project{Name: req.Name, Email: req.Email, Phone: req.Phone, RoleId: req.RoleId, Password: req.Password}}, err
+	err := u.project.Create(ctx, &biz.Project{Name: req.GetName(), Description: req.GetDescription()})
+	return &v1.CreateProjectReply{Project: &v1.Project{Name: req.Name, Description: req.Description}}, err
 }
 
 func (u *ProjectService) UpdateProject(ctx context.Context, req *v1.UpdateProjectRequest) (*v1.UpdateProjectReply, error) {
-	err := u.project.Update(ctx, req.GetId(), &biz.Project{Id: req.GetId(), Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
+	err := u.project.Update(ctx, req.GetId(), &biz.Project{Id: req.GetId(), Name: req.GetName(), Description: req.GetDescription()})
 	return &v1.UpdateProjectReply{}, err
 }
 
