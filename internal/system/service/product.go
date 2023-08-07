@@ -5,6 +5,7 @@ import (
 	v1 "github.com/liang21/terminator/api/system/v1"
 	"github.com/liang21/terminator/internal/system/biz"
 	"github.com/liang21/terminator/pkg/pagination"
+	"strconv"
 )
 
 type ProductService struct {
@@ -17,9 +18,13 @@ func NewProductService(product *biz.ProductUsecase) *ProductService {
 }
 
 func (p *ProductService) ListProduct(ctx context.Context, req *v1.ListProductRequest) (*v1.ListProductReply, error) {
+	parseIndex, err := strconv.ParseInt(req.GetPageToken(), 10, 64)
+	if err != nil {
+		return nil, err
+	}
 	meta := pagination.ListMeta{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
+		PageSize:  int64(req.GetPageSize()),
+		PageToken: parseIndex,
 	}
 	products, err := p.product.List(ctx, meta)
 	product := make([]*v1.Product, 0, len(products.Items))
@@ -34,7 +39,7 @@ func (p *ProductService) ListProduct(ctx context.Context, req *v1.ListProductReq
 
 func (p *ProductService) GetProduct(ctx context.Context, req *v1.GetProductRequest) (*v1.GetProductReply, error) {
 	product, err := p.product.Get(ctx, req.GetId())
-	return &v1.GetProductReply{Product: &v1.Product{Id: product.Id, Name: product.Name, Description: product.Description}}, err
+	return &v1.GetProductReply{Product: &v1.Product{Name: product.Name, Description: product.Description}}, err
 }
 
 func (p *ProductService) CreateProduct(ctx context.Context, req *v1.CreateProductRequest) (*v1.CreateProductReply, error) {

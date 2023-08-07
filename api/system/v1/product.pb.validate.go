@@ -1103,9 +1103,11 @@ func (m *ListProductRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Parent
+
 	// no validation rules for PageSize
 
-	// no validation rules for Page
+	// no validation rules for PageToken
 
 	if len(errors) > 0 {
 		return ListProductRequestMultiError(errors)

@@ -5,6 +5,7 @@ import (
 	v1 "github.com/liang21/terminator/api/system/v1"
 	"github.com/liang21/terminator/internal/system/biz"
 	"github.com/liang21/terminator/pkg/pagination"
+	"strconv"
 )
 
 type UserService struct {
@@ -17,9 +18,13 @@ func NewUserService(user *biz.UserUsecase) *UserService {
 }
 
 func (u *UserService) ListUser(ctx context.Context, req *v1.ListUserRequest) (*v1.ListUserReply, error) {
+	parseIndex, err := strconv.ParseInt(req.GetPageToken(), 10, 64)
+	if err != nil {
+		return nil, err
+	}
 	meta := pagination.ListMeta{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
+		PageSize:  int64(req.GetPageSize()),
+		PageToken: parseIndex,
 	}
 	users, err := u.user.List(ctx, meta)
 	user := make([]*v1.User, 0, len(users.Items))
@@ -43,7 +48,7 @@ func (u *UserService) CreateUser(ctx context.Context, req *v1.CreateUserRequest)
 }
 
 func (u *UserService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (*v1.UpdateUserReply, error) {
-	err := u.user.Update(ctx, req.GetId(), &biz.User{Id: req.GetId(), Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
+	err := u.user.Update(ctx, req.GetId(), &biz.User{Name: req.GetName(), Email: req.GetEmail(), Phone: req.GetPhone(), RoleId: req.GetRoleId(), Password: req.GetPassword()})
 	return &v1.UpdateUserReply{}, err
 }
 

@@ -5,6 +5,7 @@ import (
 	v1 "github.com/liang21/terminator/api/system/v1"
 	"github.com/liang21/terminator/internal/system/biz"
 	"github.com/liang21/terminator/pkg/pagination"
+	"strconv"
 )
 
 type ProjectService struct {
@@ -17,9 +18,13 @@ func NewProjectService(project *biz.ProjectUsecase) *ProjectService {
 }
 
 func (u *ProjectService) ListProject(ctx context.Context, req *v1.ListProjectRequest) (*v1.ListProjectReply, error) {
+	parseIndex, err := strconv.ParseInt(req.GetPageToken(), 10, 64)
+	if err != nil {
+		return nil, err
+	}
 	meta := pagination.ListMeta{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
+		PageSize:  int64(req.GetPageSize()),
+		PageToken: parseIndex,
 	}
 	projects, err := u.project.List(ctx, meta)
 	project := make([]*v1.Project, 0, len(projects.Items))
@@ -43,7 +48,7 @@ func (u *ProjectService) CreateProject(ctx context.Context, req *v1.CreateProjec
 }
 
 func (u *ProjectService) UpdateProject(ctx context.Context, req *v1.UpdateProjectRequest) (*v1.UpdateProjectReply, error) {
-	err := u.project.Update(ctx, req.GetId(), &biz.Project{Id: req.GetId(), Name: req.GetName(), Description: req.GetDescription()})
+	err := u.project.Update(ctx, req.GetId(), &biz.Project{Name: req.GetName(), Description: req.GetDescription()})
 	return &v1.UpdateProjectReply{}, err
 }
 

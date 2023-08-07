@@ -11,17 +11,17 @@ import (
 )
 
 type MysqlOptions struct {
-	Host                  string        `json:"host"`
-	Port                  int           `json:"port"`
-	Driver                string        `json:"driver"`
-	Username              string        `json:"username"`
-	Password              string        `json:"password"`
-	Database              string        `json:"database"`
-	MaxIdleConnections    int           `json:"max_idle_connections"`
-	MaxOpenConnections    int           `json:"max_open_connections"`
-	MaxConnectionLifeTime time.Duration `json:"max_connection_life_time"`
-	ShowSQL               bool          `json:"show_sql"`
-	LogLevel              int           `json:"log_level"`
+	Host                  string        `yaml:"host"`
+	Port                  int           `yaml:"port"`
+	Driver                string        `yaml:"driver"`
+	Username              string        `yaml:"username"`
+	Password              string        `yaml:"password"`
+	Database              string        `yaml:"database"`
+	MaxIdleConnections    int           `yaml:"max_idle_connections"`
+	MaxOpenConnections    int           `yaml:"max_open_connections"`
+	MaxConnectionLifeTime time.Duration `yaml:"max_connection_life_time"`
+	ShowSQL               bool          `yaml:"show_sql"`
+	LogLevel              int           `yaml:"log_level"`
 }
 
 // NewMysqlOptions New create a new gorm db instance with the given options.

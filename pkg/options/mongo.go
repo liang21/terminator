@@ -7,12 +7,12 @@ import (
 )
 
 type MongoOptions struct {
-	Uri              string  `json:"uri"`
-	Database         string  `json:"database"`
-	ConnectTimeoutMS *int64  `json:"connect_timeout_ms"`
-	MaxPoolSize      *uint64 `json:"max_pool_size"`
-	MinPoolSize      *uint64 `json:"min_pool_size"`
-	SocketTimeoutMS  *int64  `json:"socket_timeout_ms"`
+	Uri              string  `yaml:"uri"`
+	Database         string  `yaml:"database"`
+	ConnectTimeoutMS *int64  `yaml:"connect_timeout_ms"`
+	MaxPoolSize      *uint64 `yaml:"max_pool_size"`
+	MinPoolSize      *uint64 `yaml:"min_pool_size"`
+	SocketTimeoutMS  *int64  `yaml:"socket_timeout_ms"`
 }
 
 func NewMongoOptions(opts *MongoOptions) (*qmgo.Client, error) {

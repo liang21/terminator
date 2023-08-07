@@ -16,12 +16,12 @@ import (
 	"github.com/liang21/terminator/internal/system/repo"
 	service "github.com/liang21/terminator/internal/system/service"
 	"github.com/liang21/terminator/pkg/file"
+	"github.com/liang21/terminator/pkg/log"
 	"github.com/liang21/terminator/pkg/options"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/encoding/protojson"
-	"log"
 	"net"
 	"net/http"
 	"runtime/debug"
@@ -35,24 +35,38 @@ var (
 
 func main() {
 	flag.Parse()
+	// logger配置
+	logOpts := &log.Options{
+		Level:            "debug",
+		Format:           "console",
+		EnableColor:      true,
+		DisableCaller:    true,
+		OutputPaths:      []string{"D:\\terminator\\go\\terminator\\logs\\terminator.log", "stdout"},
+		ErrorOutputPaths: []string{"D:\\terminator\\go\\terminator\\logs\\error.log"},
+	}
+	// 初始化全局logger
+	log.Init(logOpts)
+	defer log.Flush()
 	bs, err := file.LoadFile(*confPath)
 	if err != nil {
-		log.Fatal("load config failed!", err)
+		log.Fatalf("load config failed!", err)
 	}
 	rdb, err := options.NewRedisOptions(&bs.Data.Redis)
 	if err != nil {
-		log.Fatal("init redis failed!", err)
+		log.Fatalf("init redis failed!", err)
 	}
 	engine, err := options.NewMysqlOptions(&bs.Data.Mysql)
 	if err != nil {
-		log.Fatal("init mysql failed!", err)
+		log.Fatalf("init mysql failed!", err)
 	}
+
 	lis, err := net.Listen("tcp", bs.GRPC.Addr)
 	if err != nil {
-		log.Fatal("init listen grpc failed!", err)
+		log.Fatalf("init listen grpc failed!", err)
 	}
 	defer lis.Close()
 	s := grpc.NewServer(
+		// add grpc interceptor
 		grpc.UnaryInterceptor(
 			grpc_middlewares.ChainUnaryServer(
 				grpc_recovery.UnaryServerInterceptor(),
@@ -60,23 +74,31 @@ func main() {
 				grpc_zap.UnaryServerInterceptor(zap.NewNop()),
 			)))
 	// TODO: 注册服务
+	// user service
 	userRepo := repo.NewUserRepo(engine, rdb)
 	userUsecase := biz.NewUserUsecase(userRepo)
 	userService := service.NewUserService(userUsecase)
 	v1.RegisterUserServiceServer(s, userService)
+	// product service
+	productRepo := repo.NewProductRepo(engine, rdb)
+	productUsecase := biz.NewProductUsecase(productRepo)
+	productService := service.NewProductService(productUsecase)
+	v1.RegisterProductServiceServer(s, productService)
+	// project service
+	projectRepo := repo.NewProjectRepo(engine, rdb)
+	projectUsecase := biz.NewProjectUsecase(projectRepo)
+	projectService := service.NewProjectService(projectUsecase)
+	v1.RegisterProjectServiceServer(s, projectService)
 	go func() {
 		if err := s.Serve(lis); err != nil {
-			log.Fatal("start grpc service failed!", err)
+			log.Fatalf("start grpc service failed!", err)
 		}
 	}()
 	mux := runtime.NewServeMux(
 		// 返回错误结果处理
-		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaler runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
-			e := runtime.HTTPStatusError{
-				HTTPStatus: 200,
-				Err:        err,
-			}
-			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaler, writer, request, &e)
+		runtime.WithErrorHandler(func(ctx context.Context, mux *runtime.ServeMux, marshaller runtime.Marshaler, writer http.ResponseWriter, request *http.Request, err error) {
+			e := runtime.HTTPStatusError{HTTPStatus: 200, Err: err}
+			runtime.DefaultHTTPErrorHandler(ctx, mux, marshaller, writer, request, &e)
 		}),
 		// 编码转换
 		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
@@ -94,7 +116,13 @@ func main() {
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
 	// 注册服务
 	if err := v1.RegisterUserServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
-		log.Fatal("register service failed!", err)
+		log.Fatalf("register service failed!", err)
+	}
+	if err := v1.RegisterProductServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+		log.Fatalf("register service failed!", err)
+	}
+	if err := v1.RegisterProjectServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+		log.Fatalf("register service failed!", err)
 	}
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
@@ -117,8 +145,15 @@ func GinLogger() gin.HandlerFunc {
 		query := c.Request.URL.RawQuery
 		c.Next()
 		cost := time.Since(start)
-		log.Printf(
-			"%d %s %s %s %s %s %s %s", c.Writer.Status(), c.Request.Method, path, query, c.ClientIP(), c.Request.UserAgent(), c.Errors.ByType(gin.ErrorTypePrivate).String(), cost,
+		log.Debugf(path,
+			"status", c.Writer.Status(),
+			"method", c.Request.Method,
+			"path", path,
+			"query", query,
+			"ip", c.ClientIP(),
+			"cost", cost,
+			"user-agent", c.Request.UserAgent(),
+			"error", c.Errors.ByType(gin.ErrorTypePrivate).String(),
 		)
 	}
 }

@@ -12,9 +12,9 @@ type Project struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Members     int64     `json:"members"`
-	UserId      []int64   `json:"user_id"`
+	UserId      int64     `json:"user_id"`
 	ProductId   int64     `json:"product_id"`
-	Delete      int64     `json:"delete"`
+	Deleted     int64     `json:"deleted"`
 	CreateAt    time.Time `json:"create_at"`
 	UpdateAt    time.Time `json:"update_at"`
 }
@@ -45,39 +45,39 @@ type ProjectDTOList struct {
 	Items      []*Project `json:"items"` //数据
 }
 
-func (uc *ProjectUsecase) List(ctx context.Context, meta pagination.ListMeta) (projectDtoList *ProjectDTOList, err error) {
-	projectDtoList, err = uc.repo.ListProject(ctx, meta)
+func (pu *ProjectUsecase) List(ctx context.Context, meta pagination.ListMeta) (projectDtoList *ProjectDTOList, err error) {
+	projectDtoList, err = pu.repo.ListProject(ctx, meta)
 	if err != nil {
 		return
 	}
 	return projectDtoList, nil
 }
 
-func (uc *ProjectUsecase) Get(ctx context.Context, id int64) (project *Project, err error) {
+func (pu *ProjectUsecase) Get(ctx context.Context, id int64) (project *Project, err error) {
 	if id == 0 {
 		return nil, errors.New("id is empty")
 	}
-	project, err = uc.repo.GetProject(ctx, id)
+	project, err = pu.repo.GetProject(ctx, id)
 	if err != nil {
 		return
 	}
 	return project, nil
 }
 
-func (uc *ProjectUsecase) Create(ctx context.Context, project *Project) error {
-	return uc.repo.CreateProject(ctx, project)
+func (pu *ProjectUsecase) Create(ctx context.Context, project *Project) error {
+	return pu.repo.CreateProject(ctx, project)
 }
 
-func (uc *ProjectUsecase) Update(ctx context.Context, id int64, project *Project) error {
+func (pu *ProjectUsecase) Update(ctx context.Context, id int64, project *Project) error {
 	if id == 0 {
 		return errors.New("id is empty")
 	}
-	return uc.repo.UpdateProject(ctx, id, project)
+	return pu.repo.UpdateProject(ctx, id, project)
 }
 
-func (uc *ProjectUsecase) Delete(ctx context.Context, id int64) error {
+func (pu *ProjectUsecase) Delete(ctx context.Context, id int64) error {
 	if id == 0 {
 		return errors.New("id is empty")
 	}
-	return uc.repo.DeleteProject(ctx, id)
+	return pu.repo.DeleteProject(ctx, id)
 }

@@ -8,12 +8,12 @@ import (
 )
 
 type RedisOptions struct {
-	Addr         string `json:"addr"`
-	Password     string `json:"password"`
-	Database     int    `json:"database"`
-	DialTimeout  int    `json:"dial_timeout"`
-	WriteTimeout int    `json:"write_timeout"`
-	ReadTimeout  int    `json:"read_timeout"`
+	Addr         string `yaml:"addr"`
+	Password     string `yaml:"password"`
+	Database     int    `yaml:"database"`
+	DialTimeout  int    `yaml:"dial_timeout"`
+	WriteTimeout int    `yaml:"write_timeout"`
+	ReadTimeout  int    `yaml:"read_timeout"`
 }
 
 func NewRedisOptions(opts *RedisOptions) (*redis.Client, error) {

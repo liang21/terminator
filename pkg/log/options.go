@@ -45,13 +45,13 @@ const (
 
 // Options contains configuration items related to log.
 type Options struct {
-	OutputPaths       []string `json:"output-paths"       mapstructure:"output-paths"`
-	ErrorOutputPaths  []string `json:"error-output-paths" mapstructure:"error-output-paths"`
+	OutputPaths       []string `json:"output_paths"       mapstructure:"output_paths"`
+	ErrorOutputPaths  []string `json:"error_output_paths" mapstructure:"error_output_paths"`
 	Level             string   `json:"level"              mapstructure:"level"`
 	Format            string   `json:"format"             mapstructure:"format"`
-	DisableCaller     bool     `json:"disable-caller"     mapstructure:"disable-caller"`
-	DisableStacktrace bool     `json:"disable-stacktrace" mapstructure:"disable-stacktrace"`
-	EnableColor       bool     `json:"enable-color"       mapstructure:"enable-color"`
+	DisableCaller     bool     `json:"disable_caller"     mapstructure:"disable_caller"`
+	DisableStacktrace bool     `json:"disable_stacktrace" mapstructure:"disable_stacktrace"`
+	EnableColor       bool     `json:"enable_color"       mapstructure:"enable_color"`
 	Development       bool     `json:"development"        mapstructure:"development"`
 	Name              string   `json:"name"               mapstructure:"name"`
 }

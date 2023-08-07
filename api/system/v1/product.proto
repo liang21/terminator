@@ -42,7 +42,7 @@ service ProductService {
   }
   rpc ListProduct (ListProductRequest) returns (ListProductReply) {
     option (google.api.http) = {
-      get: "/api/v1/product/list"
+      get: "/api/v1/products"
     };
   }
 }
@@ -88,8 +88,9 @@ message GetProductReply {
 }
 
 message ListProductRequest {
-  int64 page_size = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
-  int64 page = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
 }
 
 message ListProductReply {

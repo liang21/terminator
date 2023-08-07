@@ -23,15 +23,8 @@ type userRepo struct {
 
 func (u *userRepo) ListUser(ctx context.Context, meta pagination.ListMeta) (*biz.UserDTOList, error) {
 	var users []*biz.User
-	var limit int64
-	//分页
-	if meta.PageSize == 0 {
-		limit = 10
-	} else {
-		limit = meta.PageSize
-	}
-	offset := pagination.GetPageOffset(meta.Page, meta.PageSize)
-	count, err := u.db.Where("id = ?", 0).Limit(int(limit), int(offset)).Desc("name").FindAndCount(&users)
+	offset := pagination.GetPageOffset(meta.PageSize, meta.PageToken)
+	count, err := u.db.Limit(int(meta.PageSize), int(offset)).Desc("name").And("deleted = ?", 0).FindAndCount(&users)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +35,7 @@ func (u *userRepo) ListUser(ctx context.Context, meta pagination.ListMeta) (*biz
 }
 
 func (u *userRepo) GetUser(ctx context.Context, id int64) (*biz.User, error) {
-	user := &biz.User{Delete: 0}
+	user := &biz.User{Deleted: 0}
 	ok, err := u.db.Where("id = ?", id).Get(user)
 	if err != nil {
 		return nil, err
@@ -76,7 +69,7 @@ func (u *userRepo) UpdateUser(ctx context.Context, id int64, user *biz.User) err
 }
 
 func (u *userRepo) DeleteUser(ctx context.Context, id int64) error {
-	user := &biz.User{Delete: 1}
+	user := &biz.User{Deleted: 1}
 	result, err := u.db.Update(user, &biz.User{Id: id})
 	if err != nil {
 		return err
