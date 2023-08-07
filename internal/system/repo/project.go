@@ -36,9 +36,12 @@ func (p *projectRepo) ListProject(ctx context.Context, meta pagination.ListMeta)
 
 func (p *projectRepo) GetProject(ctx context.Context, id int64) (*biz.Project, error) {
 	project := &biz.Project{Deleted: 0}
-	err := p.db.Where("id = ?", id).Find(project)
+	ok, err := p.db.Where("id = ?", id).Get(project)
 	if err != nil {
 		return nil, err
+	}
+	if !ok {
+		return nil, errors.New("project not found")
 	}
 	return project, nil
 }

@@ -37,9 +37,12 @@ func (p *productRepo) ListProduct(ctx context.Context, meta pagination.ListMeta)
 
 func (p *productRepo) GetProduct(ctx context.Context, id int64) (*biz.Product, error) {
 	product := &biz.Product{Deleted: 0}
-	err := p.db.Where("id = ?", id).Find(product)
+	ok, err := p.db.Where("id = ?", id).Get(product)
 	if err != nil {
 		return nil, err
+	}
+	if !ok {
+		return nil, errors.New("product not found")
 	}
 	return product, nil
 }

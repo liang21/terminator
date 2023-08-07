@@ -41,8 +41,8 @@ func main() {
 		Format:           "console",
 		EnableColor:      true,
 		DisableCaller:    true,
-		OutputPaths:      []string{"D:\\terminator\\go\\terminator\\logs\\terminator.log", "stdout"},
-		ErrorOutputPaths: []string{"D:\\terminator\\go\\terminator\\logs\\error.log"},
+		OutputPaths:      []string{"/Users/liguangliang/terminator/go/terminator/logs/terminator.log", "stdout"},
+		ErrorOutputPaths: []string{"/Users/liguangliang/terminator/go/terminator/logs/error.log"},
 	}
 	// 初始化全局logger
 	log.Init(logOpts)

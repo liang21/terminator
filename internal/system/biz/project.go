@@ -3,6 +3,7 @@ package biz
 import (
 	"context"
 	"errors"
+	"github.com/liang21/terminator/pkg/log"
 	"github.com/liang21/terminator/pkg/pagination"
 	"time"
 )
@@ -54,6 +55,7 @@ func (pu *ProjectUsecase) List(ctx context.Context, meta pagination.ListMeta) (p
 }
 
 func (pu *ProjectUsecase) Get(ctx context.Context, id int64) (project *Project, err error) {
+	log.Infof("get project by id: %d", id)
 	if id == 0 {
 		return nil, errors.New("id is empty")
 	}
