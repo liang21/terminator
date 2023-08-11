@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.30.0
 // 	protoc        v4.23.2
-// source: api/system/v1/user.proto
+// source: api/system-service/v1/user.proto
 
 package v1
 
@@ -810,33 +810,33 @@ func file_api_system_v1_user_proto_rawDescGZIP() []byte {
 
 var file_api_system_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_api_system_v1_user_proto_goTypes = []interface{}{
-	(*User)(nil),              // 0: terminator.api.system.v1.User
-	(*CreateUserRequest)(nil), // 1: terminator.api.system.v1.CreateUserRequest
-	(*CreateUserReply)(nil),   // 2: terminator.api.system.v1.CreateUserReply
-	(*UpdateUserRequest)(nil), // 3: terminator.api.system.v1.UpdateUserRequest
-	(*UpdateUserReply)(nil),   // 4: terminator.api.system.v1.UpdateUserReply
-	(*DeleteUserRequest)(nil), // 5: terminator.api.system.v1.DeleteUserRequest
-	(*DeleteUserReply)(nil),   // 6: terminator.api.system.v1.DeleteUserReply
-	(*GetUserRequest)(nil),    // 7: terminator.api.system.v1.GetUserRequest
-	(*GetUserReply)(nil),      // 8: terminator.api.system.v1.GetUserReply
-	(*ListUserRequest)(nil),   // 9: terminator.api.system.v1.ListUserRequest
-	(*ListUserReply)(nil),     // 10: terminator.api.system.v1.ListUserReply
+	(*User)(nil),              // 0: terminator.api.system-service.v1.User
+	(*CreateUserRequest)(nil), // 1: terminator.api.system-service.v1.CreateUserRequest
+	(*CreateUserReply)(nil),   // 2: terminator.api.system-service.v1.CreateUserReply
+	(*UpdateUserRequest)(nil), // 3: terminator.api.system-service.v1.UpdateUserRequest
+	(*UpdateUserReply)(nil),   // 4: terminator.api.system-service.v1.UpdateUserReply
+	(*DeleteUserRequest)(nil), // 5: terminator.api.system-service.v1.DeleteUserRequest
+	(*DeleteUserReply)(nil),   // 6: terminator.api.system-service.v1.DeleteUserReply
+	(*GetUserRequest)(nil),    // 7: terminator.api.system-service.v1.GetUserRequest
+	(*GetUserReply)(nil),      // 8: terminator.api.system-service.v1.GetUserReply
+	(*ListUserRequest)(nil),   // 9: terminator.api.system-service.v1.ListUserRequest
+	(*ListUserReply)(nil),     // 10: terminator.api.system-service.v1.ListUserReply
 }
 var file_api_system_v1_user_proto_depIdxs = []int32{
-	0,  // 0: terminator.api.system.v1.CreateUserReply.user:type_name -> terminator.api.system.v1.User
-	0,  // 1: terminator.api.system.v1.UpdateUserReply.user:type_name -> terminator.api.system.v1.User
-	0,  // 2: terminator.api.system.v1.GetUserReply.user:type_name -> terminator.api.system.v1.User
-	0,  // 3: terminator.api.system.v1.ListUserReply.results:type_name -> terminator.api.system.v1.User
-	1,  // 4: terminator.api.system.v1.UserService.CreateUser:input_type -> terminator.api.system.v1.CreateUserRequest
-	3,  // 5: terminator.api.system.v1.UserService.UpdateUser:input_type -> terminator.api.system.v1.UpdateUserRequest
-	5,  // 6: terminator.api.system.v1.UserService.DeleteUser:input_type -> terminator.api.system.v1.DeleteUserRequest
-	7,  // 7: terminator.api.system.v1.UserService.GetUser:input_type -> terminator.api.system.v1.GetUserRequest
-	9,  // 8: terminator.api.system.v1.UserService.ListUser:input_type -> terminator.api.system.v1.ListUserRequest
-	2,  // 9: terminator.api.system.v1.UserService.CreateUser:output_type -> terminator.api.system.v1.CreateUserReply
-	4,  // 10: terminator.api.system.v1.UserService.UpdateUser:output_type -> terminator.api.system.v1.UpdateUserReply
-	6,  // 11: terminator.api.system.v1.UserService.DeleteUser:output_type -> terminator.api.system.v1.DeleteUserReply
-	8,  // 12: terminator.api.system.v1.UserService.GetUser:output_type -> terminator.api.system.v1.GetUserReply
-	10, // 13: terminator.api.system.v1.UserService.ListUser:output_type -> terminator.api.system.v1.ListUserReply
+	0,  // 0: terminator.api.system-service.v1.CreateUserReply.user:type_name -> terminator.api.system-service.v1.User
+	0,  // 1: terminator.api.system-service.v1.UpdateUserReply.user:type_name -> terminator.api.system-service.v1.User
+	0,  // 2: terminator.api.system-service.v1.GetUserReply.user:type_name -> terminator.api.system-service.v1.User
+	0,  // 3: terminator.api.system-service.v1.ListUserReply.results:type_name -> terminator.api.system-service.v1.User
+	1,  // 4: terminator.api.system-service.v1.UserService.CreateUser:input_type -> terminator.api.system-service.v1.CreateUserRequest
+	3,  // 5: terminator.api.system-service.v1.UserService.UpdateUser:input_type -> terminator.api.system-service.v1.UpdateUserRequest
+	5,  // 6: terminator.api.system-service.v1.UserService.DeleteUser:input_type -> terminator.api.system-service.v1.DeleteUserRequest
+	7,  // 7: terminator.api.system-service.v1.UserService.GetUser:input_type -> terminator.api.system-service.v1.GetUserRequest
+	9,  // 8: terminator.api.system-service.v1.UserService.ListUser:input_type -> terminator.api.system-service.v1.ListUserRequest
+	2,  // 9: terminator.api.system-service.v1.UserService.CreateUser:output_type -> terminator.api.system-service.v1.CreateUserReply
+	4,  // 10: terminator.api.system-service.v1.UserService.UpdateUser:output_type -> terminator.api.system-service.v1.UpdateUserReply
+	6,  // 11: terminator.api.system-service.v1.UserService.DeleteUser:output_type -> terminator.api.system-service.v1.DeleteUserReply
+	8,  // 12: terminator.api.system-service.v1.UserService.GetUser:output_type -> terminator.api.system-service.v1.GetUserReply
+	10, // 13: terminator.api.system-service.v1.UserService.ListUser:output_type -> terminator.api.system-service.v1.ListUserReply
 	9,  // [9:14] is the sub-list for method output_type
 	4,  // [4:9] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name

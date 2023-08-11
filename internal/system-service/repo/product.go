@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/liang21/terminator/internal/system/biz"
+	"github.com/liang21/terminator/internal/system-service/biz"
 	"github.com/liang21/terminator/pkg/pagination"
 	"github.com/redis/go-redis/v9"
 	"xorm.io/xorm"

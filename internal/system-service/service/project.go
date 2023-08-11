@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	v1 "github.com/liang21/terminator/api/system/v1"
-	"github.com/liang21/terminator/internal/system/biz"
+	"github.com/liang21/terminator/internal/system-service/biz"
 	"github.com/liang21/terminator/pkg/pagination"
 	"strconv"
 )

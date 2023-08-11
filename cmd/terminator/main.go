@@ -12,9 +12,9 @@ import (
 	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	v1 "github.com/liang21/terminator/api/system/v1"
-	"github.com/liang21/terminator/internal/system/biz"
-	"github.com/liang21/terminator/internal/system/repo"
-	service "github.com/liang21/terminator/internal/system/service"
+	"github.com/liang21/terminator/internal/system-service/biz"
+	"github.com/liang21/terminator/internal/system-service/repo"
+	service "github.com/liang21/terminator/internal/system-service/service"
 	"github.com/liang21/terminator/pkg/file"
 	"github.com/liang21/terminator/pkg/log"
 	"github.com/liang21/terminator/pkg/options"
@@ -41,8 +41,8 @@ func main() {
 		Format:           "console",
 		EnableColor:      true,
 		DisableCaller:    true,
-		OutputPaths:      []string{"/Users/liguangliang/terminator/go/terminator/logs/terminator.log", "stdout"},
-		ErrorOutputPaths: []string{"/Users/liguangliang/terminator/go/terminator/logs/error.log"},
+		OutputPaths:      []string{"D:\\terminator\\go\\terminator\\logs\\terminator.log", "stdout"},
+		ErrorOutputPaths: []string{"D:\\terminator\\go\\terminator\\logs\\error.log"},
 	}
 	// 初始化全局logger
 	log.Init(logOpts)

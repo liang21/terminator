@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.2
-// source: api/system/v1/product.proto
+// source: api/system-service/v1/product.proto
 
 package v1
 
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ProductService_CreateProduct_FullMethodName = "/terminator.api.system.v1.ProductService/CreateProduct"
-	ProductService_UpdateProduct_FullMethodName = "/terminator.api.system.v1.ProductService/UpdateProduct"
-	ProductService_DeleteProduct_FullMethodName = "/terminator.api.system.v1.ProductService/DeleteProduct"
-	ProductService_GetProduct_FullMethodName    = "/terminator.api.system.v1.ProductService/GetProduct"
-	ProductService_ListProduct_FullMethodName   = "/terminator.api.system.v1.ProductService/ListProduct"
+	ProductService_CreateProduct_FullMethodName = "/terminator.api.system-service.v1.ProductService/CreateProduct"
+	ProductService_UpdateProduct_FullMethodName = "/terminator.api.system-service.v1.ProductService/UpdateProduct"
+	ProductService_DeleteProduct_FullMethodName = "/terminator.api.system-service.v1.ProductService/DeleteProduct"
+	ProductService_GetProduct_FullMethodName    = "/terminator.api.system-service.v1.ProductService/GetProduct"
+	ProductService_ListProduct_FullMethodName   = "/terminator.api.system-service.v1.ProductService/ListProduct"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -228,7 +228,7 @@ func _ProductService_ListProduct_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "terminator.api.system.v1.ProductService",
+	ServiceName: "terminator.api.system-service.v1.ProductService",
 	HandlerType: (*ProductServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -253,5 +253,5 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/system/v1/product.proto",
+	Metadata: "api/system-service/v1/product.proto",
 }

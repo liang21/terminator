@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.2
-// source: api/system/v1/project.proto
+// source: api/system-service/v1/project.proto
 
 package v1
 
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ProjectService_CreateProject_FullMethodName = "/terminator.api.system.v1.ProjectService/CreateProject"
-	ProjectService_UpdateProject_FullMethodName = "/terminator.api.system.v1.ProjectService/UpdateProject"
-	ProjectService_DeleteProject_FullMethodName = "/terminator.api.system.v1.ProjectService/DeleteProject"
-	ProjectService_GetProject_FullMethodName    = "/terminator.api.system.v1.ProjectService/GetProject"
-	ProjectService_ListProject_FullMethodName   = "/terminator.api.system.v1.ProjectService/ListProject"
+	ProjectService_CreateProject_FullMethodName = "/terminator.api.system-service.v1.ProjectService/CreateProject"
+	ProjectService_UpdateProject_FullMethodName = "/terminator.api.system-service.v1.ProjectService/UpdateProject"
+	ProjectService_DeleteProject_FullMethodName = "/terminator.api.system-service.v1.ProjectService/DeleteProject"
+	ProjectService_GetProject_FullMethodName    = "/terminator.api.system-service.v1.ProjectService/GetProject"
+	ProjectService_ListProject_FullMethodName   = "/terminator.api.system-service.v1.ProjectService/ListProject"
 )
 
 // ProjectServiceClient is the client API for ProjectService service.
@@ -228,7 +228,7 @@ func _ProjectService_ListProject_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProjectService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "terminator.api.system.v1.ProjectService",
+	ServiceName: "terminator.api.system-service.v1.ProjectService",
 	HandlerType: (*ProjectServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -253,5 +253,5 @@ var ProjectService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/system/v1/project.proto",
+	Metadata: "api/system-service/v1/project.proto",
 }
