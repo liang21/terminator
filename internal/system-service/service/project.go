@@ -43,8 +43,8 @@ func (u *ProjectService) GetProject(ctx context.Context, req *v1.GetProjectReque
 }
 
 func (u *ProjectService) CreateProject(ctx context.Context, req *v1.CreateProjectRequest) (*v1.CreateProjectReply, error) {
-	err := u.project.Create(ctx, &biz.Project{Name: req.GetName(), Description: req.GetDescription()})
-	return &v1.CreateProjectReply{Project: &v1.Project{Name: req.Name, Description: req.Description}}, err
+	err := u.project.Create(ctx, &biz.Project{Name: req.GetName(), Description: req.GetDescription(), ProductId: req.GetProductId()})
+	return &v1.CreateProjectReply{}, err
 }
 
 func (u *ProjectService) UpdateProject(ctx context.Context, req *v1.UpdateProjectRequest) (*v1.UpdateProjectReply, error) {

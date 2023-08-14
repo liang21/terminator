@@ -1,0 +1,122 @@
+syntax = "proto3";
+package terminator.api.test.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "api/test-service/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System TestPlan API"
+    version: "v1.0.0"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service PlanService {
+  rpc CreateTestPlan (CreateTestPlanRequest) returns (CreateTestPlanReply) {
+    option (google.api.http) = {
+      post: "/api/v1/plan"
+      body: "*"
+    };
+  }
+  rpc UpdateTestPlan (UpdateTestPlanRequest) returns (UpdateTestPlanReply) {
+    option (google.api.http) = {
+      put: "/api/v1/plan/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteTestPlan (DeleteTestPlanRequest) returns (DeleteTestPlanReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/plan/{id}"
+    };
+  }
+  rpc GetTestPlan (GetTestPlanRequest) returns (GetTestPlanReply) {
+    option (google.api.http) = {
+      get: "/api/v1/plan/{id}"
+    };
+  }
+  rpc ListTestPlan (ListTestPlanRequest) returns (ListTestPlanReply) {
+    option (google.api.http) = {
+      get: "/api/v1/plans"
+    };
+  }
+}
+
+message TestPlan {
+  int64 id = 1;
+  int64 project_id = 2;
+  string name = 3;
+  string status = 4;
+  string stage = 5;
+  string description = 6;
+  int64 review_total = 7;
+  int64 review_pass_rule = 8;
+  google.protobuf.Timestamp planned_start_at = 9;
+  google.protobuf.Timestamp planned_end_at = 10;
+  google.protobuf.Timestamp actual_start_at = 11;
+  google.protobuf.Timestamp actual_end_at = 12;
+}
+
+message CreateTestPlanRequest {
+  int64 project_id = 1 [(validate.rules).int64 = {gt: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string status = 3;
+  string stage = 4;
+  string description = 5;
+  google.protobuf.Timestamp planned_start_at = 6;
+  google.protobuf.Timestamp planned_end_at = 7;
+  google.protobuf.Timestamp actual_start_at = 8;
+  google.protobuf.Timestamp actual_end_at = 9;
+}
+
+message CreateTestPlanReply {
+  TestPlan TestPlan = 1;
+}
+
+message UpdateTestPlanRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 project_id = 2 [(validate.rules).int64 = {gt: 0}];
+  string name = 3 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string status = 4;
+  string stage = 5;
+  string description = 6;
+  google.protobuf.Timestamp planned_start_at = 7;
+  google.protobuf.Timestamp planned_end_at = 8;
+  google.protobuf.Timestamp actual_start_at = 9;
+  google.protobuf.Timestamp actual_end_at = 10;
+}
+
+message UpdateTestPlanReply {
+  TestPlan TestPlan = 1;
+}
+
+message DeleteTestPlanRequest {
+  int64 id = 1;
+}
+message DeleteTestPlanReply {
+}
+
+message GetTestPlanRequest {
+  int64 id = 1;
+}
+
+message GetTestPlanReply {
+  TestPlan TestPlan = 1;
+}
+
+message ListTestPlanRequest {
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+}
+
+message ListTestPlanReply {
+  int64 total = 1;
+  repeated TestPlan results = 2;
+}

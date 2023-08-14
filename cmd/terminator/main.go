@@ -86,7 +86,7 @@ func main() {
 	v1.RegisterProductServiceServer(s, productService)
 	// project service
 	projectRepo := repo.NewProjectRepo(engine, rdb)
-	projectUsecase := biz.NewProjectUsecase(projectRepo)
+	projectUsecase := biz.NewProjectUsecase(projectRepo, productRepo)
 	projectService := service.NewProjectService(projectUsecase)
 	v1.RegisterProjectServiceServer(s, projectService)
 	go func() {

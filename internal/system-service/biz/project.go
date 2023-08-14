@@ -34,11 +34,12 @@ type ProjectRepo interface {
 }
 
 type ProjectUsecase struct {
-	repo ProjectRepo
+	project ProjectRepo
+	product ProductRepo
 }
 
-func NewProjectUsecase(repo ProjectRepo) *ProjectUsecase {
-	return &ProjectUsecase{repo: repo}
+func NewProjectUsecase(project ProjectRepo, product ProductRepo) *ProjectUsecase {
+	return &ProjectUsecase{project: project, product: product}
 }
 
 type ProjectDTOList struct {
@@ -47,7 +48,7 @@ type ProjectDTOList struct {
 }
 
 func (pu *ProjectUsecase) List(ctx context.Context, meta pagination.ListMeta) (projectDtoList *ProjectDTOList, err error) {
-	projectDtoList, err = pu.repo.ListProject(ctx, meta)
+	projectDtoList, err = pu.project.ListProject(ctx, meta)
 	if err != nil {
 		return
 	}
@@ -59,7 +60,7 @@ func (pu *ProjectUsecase) Get(ctx context.Context, id int64) (project *Project, 
 	if id == 0 {
 		return nil, errors.New("id is empty")
 	}
-	project, err = pu.repo.GetProject(ctx, id)
+	project, err = pu.project.GetProject(ctx, id)
 	if err != nil {
 		return
 	}
@@ -67,19 +68,26 @@ func (pu *ProjectUsecase) Get(ctx context.Context, id int64) (project *Project, 
 }
 
 func (pu *ProjectUsecase) Create(ctx context.Context, project *Project) error {
-	return pu.repo.CreateProject(ctx, project)
+	product, err := pu.product.GetProduct(ctx, project.ProductId)
+	if err != nil {
+		return err
+	}
+	if product == nil {
+		return errors.New("product not found")
+	}
+	return pu.project.CreateProject(ctx, project)
 }
 
 func (pu *ProjectUsecase) Update(ctx context.Context, id int64, project *Project) error {
 	if id == 0 {
 		return errors.New("id is empty")
 	}
-	return pu.repo.UpdateProject(ctx, id, project)
+	return pu.project.UpdateProject(ctx, id, project)
 }
 
 func (pu *ProjectUsecase) Delete(ctx context.Context, id int64) error {
 	if id == 0 {
 		return errors.New("id is empty")
 	}
-	return pu.repo.DeleteProject(ctx, id)
+	return pu.project.DeleteProject(ctx, id)
 }

@@ -1,0 +1,98 @@
+syntax = "proto3";
+package terminator.api.test.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "api/test-service/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System TestModule API"
+    version: "v1.0.0"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service TestModuleService {
+  rpc CreateTestModule (CreateTestModuleRequest) returns (CreateTestModuleReply) {
+    option (google.api.http) = {
+      post: "/api/v1/module"
+      body: "*"
+    };
+  }
+  rpc UpdateTestModule (UpdateTestModuleRequest) returns (UpdateTestModuleReply) {
+    option (google.api.http) = {
+      put: "/api/v1/module/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteTestModule (DeleteTestModuleRequest) returns (DeleteTestModuleReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/module/{id}"
+    };
+  }
+  rpc GetTestModule (GetTestModuleRequest) returns (GetTestModuleReply) {
+    option (google.api.http) = {
+      get: "/api/v1/module/{id}"
+    };
+  }
+  rpc ListTestModule (ListTestModuleRequest) returns (ListTestModuleReply) {
+    option (google.api.http) = {
+      get: "/api/v1/modules"
+    };
+  }
+}
+
+message TestModule {
+  int64 id = 1;
+  string name = 2;
+  int64 project_id = 3;
+}
+
+message CreateTestModuleRequest {
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  int64 project_id = 2 [(validate.rules).int64 = {gt: 0}];
+}
+
+message CreateTestModuleReply {
+  TestModule TestModule = 1;
+}
+
+message UpdateTestModuleRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}]; // the name of string must be between 5 and 50 character
+  int64 project_id = 3 [(validate.rules).int64 = {gt: 0}];
+}
+
+message UpdateTestModuleReply {
+  TestModule TestModule = 1;
+}
+
+message DeleteTestModuleRequest {
+  int64 id = 1;
+}
+message DeleteTestModuleReply {
+}
+
+message GetTestModuleRequest {
+  int64 id = 1;
+}
+
+message GetTestModuleReply {
+  TestModule TestModule = 1;
+}
+
+message ListTestModuleRequest {
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+}
+
+message ListTestModuleReply {
+  int64 total = 1;
+  repeated TestModule results = 2;
+}

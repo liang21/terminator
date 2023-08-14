@@ -1,0 +1,143 @@
+syntax = "proto3";
+package terminator.api.test.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "api/test-service/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System TestCase API"
+    version: "v1.0.0"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service TestCaseService {
+  rpc CreateTestCase (CreateTestCaseRequest) returns (CreateTestCaseReply) {
+    option (google.api.http) = {
+      post: "/api/v1/case"
+      body: "*"
+    };
+  }
+  rpc UpdateTestCase (UpdateTestCaseRequest) returns (UpdateTestCaseReply) {
+    option (google.api.http) = {
+      put: "/api/v1/case/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteTestCase (DeleteTestCaseRequest) returns (DeleteTestCaseReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/case/{id}"
+    };
+  }
+  rpc GetTestCase (GetTestCaseRequest) returns (GetTestCaseReply) {
+    option (google.api.http) = {
+      get: "/api/v1/case/{id}"
+    };
+  }
+  rpc ListTestCase (ListTestCaseRequest) returns (ListTestCaseReply) {
+    option (google.api.http) = {
+      get: "/api/v1/cases"
+    };
+  }
+}
+
+message TestCase {
+  int64 id = 1;
+  int64 module_id = 2;
+  int64 project_id = 3;
+  string name = 4;
+  string type = 5;
+  string maintainer = 6;
+  string priority = 7;
+  string method = 8;
+  string prerequisite = 9;
+  string remark = 10;
+  string steps = 11;
+  int64 review_status = 12;
+  string status = 13;
+  string step_description = 14;
+  string step_expected_result = 15;
+  string create_user = 16;
+  string original_status = 17;
+  string last_executed_result = 18;
+}
+
+message CreateTestCaseRequest {
+  int64 module_id = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 project_id = 2;
+  string name = 3 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string type = 4 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string maintainer = 5 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string priority = 6 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string method = 7;
+  string prerequisite = 8 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string remark = 9;
+  string steps = 10;
+  int64 review_status = 11;
+  string status = 12;
+  string step_description = 13;
+  string step_expected_result = 14;
+  string create_user = 15;
+  string original_status = 16;
+  string last_executed_result = 17;
+}
+
+message CreateTestCaseReply {
+  TestCase TestCase = 1;
+}
+
+message UpdateTestCaseRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 module_id = 2 [(validate.rules).int64 = {gt: 0}];
+  int64 project_id = 3;
+  string name = 4 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string type = 5 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string maintainer = 6 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string priority = 7 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string method = 8;
+  string prerequisite = 9 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string remark = 10;
+  string steps = 11;
+  int64 review_status = 12;
+  string status = 13;
+  string step_description = 14;
+  string step_expected_result = 15;
+  string create_user = 16;
+  string original_status = 17;
+  string last_executed_result = 18;
+}
+
+message UpdateTestCaseReply {
+  TestCase TestCase = 1;
+}
+
+message DeleteTestCaseRequest {
+  int64 id = 1;
+}
+message DeleteTestCaseReply {
+}
+
+message GetTestCaseRequest {
+  int64 id = 1;
+}
+
+message GetTestCaseReply {
+  TestCase TestCase = 1;
+}
+
+message ListTestCaseRequest {
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+}
+
+message ListTestCaseReply {
+  int64 total = 1;
+  repeated TestCase results = 2;
+}

@@ -28,7 +28,7 @@ func (u User) TableName() string {
 }
 
 type UserRepo interface {
-	// db
+	// ListUser db
 	ListUser(ctx context.Context, meta pagination.ListMeta) (userDto *UserDTOList, err error)
 	GetUser(ctx context.Context, id int64) (*User, error)
 	CreateUser(ctx context.Context, user *User) error
