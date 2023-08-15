@@ -1,0 +1,218 @@
+syntax = "proto3";
+package terminator.api.test.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "api/test-service/v1;v1";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Terminator System TestReview API"
+    version: "v1.0.0"
+  }
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+};
+
+service TestReviewService {
+  rpc CreateTestReview (CreateTestReviewRequest) returns (CreateTestReviewReply) {
+    option (google.api.http) = {
+      post: "/api/v1/review"
+      body: "*"
+    };
+  }
+  rpc UpdateTestReview (UpdateTestReviewRequest) returns (UpdateTestReviewReply) {
+    option (google.api.http) = {
+      put: "/api/v1/review/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteTestReview (DeleteTestReviewRequest) returns (DeleteTestReviewReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/review/{id}"
+    };
+  }
+  rpc GetTestReview (GetTestReviewRequest) returns (GetTestReviewReply) {
+    option (google.api.http) = {
+      get: "/api/v1/review/{id}"
+    };
+  }
+  rpc ListTestReview (ListTestReviewRequest) returns (ListTestReviewReply) {
+    option (google.api.http) = {
+      get: "/api/v1/reviews"
+    };
+  }
+}
+
+message TestReview {
+  int64 id = 1;
+  int64 project_id = 2;
+  string name = 3;
+  string status = 4;
+  string description = 5;
+  int64 review_total = 6;
+  int64 review_pass_rule = 7;
+  google.protobuf.Timestamp reviewed_start_at = 9;
+}
+
+message CreateTestReviewRequest {
+  int64 project_id = 1;
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string status = 3;
+  string description = 4;
+  google.protobuf.Timestamp reviewed_start_at = 5;
+}
+
+message CreateTestReviewReply {
+  TestReview TestReview = 1;
+}
+
+message UpdateTestReviewRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 project_id = 2;
+  string name = 3 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string status = 4;
+  string description = 5;
+  google.protobuf.Timestamp reviewed_start_at = 6;
+}
+
+message UpdateTestReviewReply {
+  TestReview TestReview = 1;
+}
+
+message DeleteTestReviewRequest {
+  int64 id = 1;
+}
+message DeleteTestReviewReply {
+}
+
+message GetTestReviewRequest {
+  int64 id = 1;
+}
+
+message GetTestReviewReply {
+  TestReview TestReview = 1;
+}
+
+message ListTestReviewRequest {
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+}
+
+message ListTestReviewReply {
+  int64 total = 1;
+  repeated TestReview results = 2;
+}
+
+service TestReviewCaseService {
+  rpc CreateTestReviewCase (CreateTestReviewCaseRequest) returns (CreateTestReviewCaseReply) {
+    option (google.api.http) = {
+      post: "/api/v1/review/case"
+      body: "*"
+    };
+  }
+  rpc UpdateTestReviewCase (UpdateTestReviewCaseRequest) returns (UpdateTestReviewCaseReply) {
+    option (google.api.http) = {
+      put: "/api/v1/review/case/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteTestReviewCase (DeleteTestReviewCaseRequest) returns (DeleteTestReviewCaseReply) {
+    option (google.api.http) = {
+      delete: "/api/v1/review/case/{id}"
+    };
+  }
+  rpc GetTestReviewCase (GetTestReviewCaseRequest) returns (GetTestReviewCaseReply) {
+    option (google.api.http) = {
+      get: "/api/v1/review/case/{id}"
+    };
+  }
+  rpc ListTestReviewCase (ListTestReviewCaseRequest) returns (ListTestReviewCaseReply) {
+    option (google.api.http) = {
+      get: "/api/v1/review/cases"
+    };
+  }
+}
+
+message TestReviewCase {
+  int64 id = 1;
+  int64 review_id = 2;
+  int64 case_id = 3;
+  string status = 4;
+}
+
+message CreateTestReviewCaseRequest {
+  int64 plan_id = 1;
+  int64 case_id = 2;
+  string result = 3;
+}
+
+message CreateTestReviewCaseReply {
+  TestReviewCase TestReviewCase = 1;
+}
+
+message UpdateTestReviewCaseRequest {
+  int64 id = 1 [(validate.rules).int64 = {gt: 0}];
+  int64 plan_id = 2;
+  int64 case_id = 3;
+  string result = 4;
+}
+
+message UpdateTestReviewCaseReply {
+  TestReviewCase TestReviewCase = 1;
+}
+
+message DeleteTestReviewCaseRequest {
+  int64 id = 1;
+}
+message DeleteTestReviewCaseReply {
+}
+
+message GetTestReviewCaseRequest {
+  int64 id = 1;
+}
+
+message GetTestReviewCaseReply {
+  TestReviewCase TestReviewCase = 1;
+}
+
+message ListTestReviewCaseRequest {
+  string parent = 1;
+  int32 page_size = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "页大小"}];
+  string page_token = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field)={description: "当前页码"}];
+}
+
+message ListTestReviewCaseReply {
+  int64 total = 1;
+  repeated TestReviewCase results = 2;
+}
+
+service TestReviewReportService {
+  rpc GetTestPlanReport (GetTestReviewReportRequest) returns (GetTestReviewReportReply) {
+    option (google.api.http) = {
+      get: "/api/v1/test/report/{id}"
+    };
+  }
+}
+
+message TestReviewReport {
+  int64 id = 1;
+  int64 test_plan_id = 2;
+  string name = 3;
+  string status = 4;
+  uint32 success = 5;
+}
+
+
+message GetTestReviewReportRequest {
+  int64 id = 1;
+}
+
+message GetTestReviewReportReply {
+  TestReviewReport TestReviewReport = 1;
+}
