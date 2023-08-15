@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.30.0
 // 	protoc        v4.23.2
-// source: api/system-service/v1/project.proto
+// source: api/system/v1/project.proto
 
 package v1
 
@@ -818,33 +818,33 @@ func file_api_system_v1_project_proto_rawDescGZIP() []byte {
 
 var file_api_system_v1_project_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_api_system_v1_project_proto_goTypes = []interface{}{
-	(*Project)(nil),              // 0: terminator.api.system-service.v1.Project
-	(*CreateProjectRequest)(nil), // 1: terminator.api.system-service.v1.CreateProjectRequest
-	(*CreateProjectReply)(nil),   // 2: terminator.api.system-service.v1.CreateProjectReply
-	(*UpdateProjectRequest)(nil), // 3: terminator.api.system-service.v1.UpdateProjectRequest
-	(*UpdateProjectReply)(nil),   // 4: terminator.api.system-service.v1.UpdateProjectReply
-	(*DeleteProjectRequest)(nil), // 5: terminator.api.system-service.v1.DeleteProjectRequest
-	(*DeleteProjectReply)(nil),   // 6: terminator.api.system-service.v1.DeleteProjectReply
-	(*GetProjectRequest)(nil),    // 7: terminator.api.system-service.v1.GetProjectRequest
-	(*GetProjectReply)(nil),      // 8: terminator.api.system-service.v1.GetProjectReply
-	(*ListProjectRequest)(nil),   // 9: terminator.api.system-service.v1.ListProjectRequest
-	(*ListProjectReply)(nil),     // 10: terminator.api.system-service.v1.ListProjectReply
+	(*Project)(nil),              // 0: terminator.api.system.v1.Project
+	(*CreateProjectRequest)(nil), // 1: terminator.api.system.v1.CreateProjectRequest
+	(*CreateProjectReply)(nil),   // 2: terminator.api.system.v1.CreateProjectReply
+	(*UpdateProjectRequest)(nil), // 3: terminator.api.system.v1.UpdateProjectRequest
+	(*UpdateProjectReply)(nil),   // 4: terminator.api.system.v1.UpdateProjectReply
+	(*DeleteProjectRequest)(nil), // 5: terminator.api.system.v1.DeleteProjectRequest
+	(*DeleteProjectReply)(nil),   // 6: terminator.api.system.v1.DeleteProjectReply
+	(*GetProjectRequest)(nil),    // 7: terminator.api.system.v1.GetProjectRequest
+	(*GetProjectReply)(nil),      // 8: terminator.api.system.v1.GetProjectReply
+	(*ListProjectRequest)(nil),   // 9: terminator.api.system.v1.ListProjectRequest
+	(*ListProjectReply)(nil),     // 10: terminator.api.system.v1.ListProjectReply
 }
 var file_api_system_v1_project_proto_depIdxs = []int32{
-	0,  // 0: terminator.api.system-service.v1.CreateProjectReply.project:type_name -> terminator.api.system-service.v1.Project
-	0,  // 1: terminator.api.system-service.v1.UpdateProjectReply.project:type_name -> terminator.api.system-service.v1.Project
-	0,  // 2: terminator.api.system-service.v1.GetProjectReply.project:type_name -> terminator.api.system-service.v1.Project
-	0,  // 3: terminator.api.system-service.v1.ListProjectReply.results:type_name -> terminator.api.system-service.v1.Project
-	1,  // 4: terminator.api.system-service.v1.ProjectService.CreateProject:input_type -> terminator.api.system-service.v1.CreateProjectRequest
-	3,  // 5: terminator.api.system-service.v1.ProjectService.UpdateProject:input_type -> terminator.api.system-service.v1.UpdateProjectRequest
-	5,  // 6: terminator.api.system-service.v1.ProjectService.DeleteProject:input_type -> terminator.api.system-service.v1.DeleteProjectRequest
-	7,  // 7: terminator.api.system-service.v1.ProjectService.GetProject:input_type -> terminator.api.system-service.v1.GetProjectRequest
-	9,  // 8: terminator.api.system-service.v1.ProjectService.ListProject:input_type -> terminator.api.system-service.v1.ListProjectRequest
-	2,  // 9: terminator.api.system-service.v1.ProjectService.CreateProject:output_type -> terminator.api.system-service.v1.CreateProjectReply
-	4,  // 10: terminator.api.system-service.v1.ProjectService.UpdateProject:output_type -> terminator.api.system-service.v1.UpdateProjectReply
-	6,  // 11: terminator.api.system-service.v1.ProjectService.DeleteProject:output_type -> terminator.api.system-service.v1.DeleteProjectReply
-	8,  // 12: terminator.api.system-service.v1.ProjectService.GetProject:output_type -> terminator.api.system-service.v1.GetProjectReply
-	10, // 13: terminator.api.system-service.v1.ProjectService.ListProject:output_type -> terminator.api.system-service.v1.ListProjectReply
+	0,  // 0: terminator.api.system.v1.CreateProjectReply.project:type_name -> terminator.api.system.v1.Project
+	0,  // 1: terminator.api.system.v1.UpdateProjectReply.project:type_name -> terminator.api.system.v1.Project
+	0,  // 2: terminator.api.system.v1.GetProjectReply.project:type_name -> terminator.api.system.v1.Project
+	0,  // 3: terminator.api.system.v1.ListProjectReply.results:type_name -> terminator.api.system.v1.Project
+	1,  // 4: terminator.api.system.v1.ProjectService.CreateProject:input_type -> terminator.api.system.v1.CreateProjectRequest
+	3,  // 5: terminator.api.system.v1.ProjectService.UpdateProject:input_type -> terminator.api.system.v1.UpdateProjectRequest
+	5,  // 6: terminator.api.system.v1.ProjectService.DeleteProject:input_type -> terminator.api.system.v1.DeleteProjectRequest
+	7,  // 7: terminator.api.system.v1.ProjectService.GetProject:input_type -> terminator.api.system.v1.GetProjectRequest
+	9,  // 8: terminator.api.system.v1.ProjectService.ListProject:input_type -> terminator.api.system.v1.ListProjectRequest
+	2,  // 9: terminator.api.system.v1.ProjectService.CreateProject:output_type -> terminator.api.system.v1.CreateProjectReply
+	4,  // 10: terminator.api.system.v1.ProjectService.UpdateProject:output_type -> terminator.api.system.v1.UpdateProjectReply
+	6,  // 11: terminator.api.system.v1.ProjectService.DeleteProject:output_type -> terminator.api.system.v1.DeleteProjectReply
+	8,  // 12: terminator.api.system.v1.ProjectService.GetProject:output_type -> terminator.api.system.v1.GetProjectReply
+	10, // 13: terminator.api.system.v1.ProjectService.ListProject:output_type -> terminator.api.system.v1.ListProjectReply
 	9,  // [9:14] is the sub-list for method output_type
 	4,  // [4:9] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name

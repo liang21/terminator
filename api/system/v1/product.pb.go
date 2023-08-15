@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.30.0
 // 	protoc        v4.23.2
-// source: api/system-service/v1/product.proto
+// source: api/system/v1/product.proto
 
 package v1
 
@@ -730,33 +730,33 @@ func file_api_system_v1_product_proto_rawDescGZIP() []byte {
 
 var file_api_system_v1_product_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_api_system_v1_product_proto_goTypes = []interface{}{
-	(*Product)(nil),              // 0: terminator.api.system-service.v1.Product
-	(*CreateProductRequest)(nil), // 1: terminator.api.system-service.v1.CreateProductRequest
-	(*CreateProductReply)(nil),   // 2: terminator.api.system-service.v1.CreateProductReply
-	(*UpdateProductRequest)(nil), // 3: terminator.api.system-service.v1.UpdateProductRequest
-	(*UpdateProductReply)(nil),   // 4: terminator.api.system-service.v1.UpdateProductReply
-	(*DeleteProductRequest)(nil), // 5: terminator.api.system-service.v1.DeleteProductRequest
-	(*DeleteProductReply)(nil),   // 6: terminator.api.system-service.v1.DeleteProductReply
-	(*GetProductRequest)(nil),    // 7: terminator.api.system-service.v1.GetProductRequest
-	(*GetProductReply)(nil),      // 8: terminator.api.system-service.v1.GetProductReply
-	(*ListProductRequest)(nil),   // 9: terminator.api.system-service.v1.ListProductRequest
-	(*ListProductReply)(nil),     // 10: terminator.api.system-service.v1.ListProductReply
+	(*Product)(nil),              // 0: terminator.api.system.v1.Product
+	(*CreateProductRequest)(nil), // 1: terminator.api.system.v1.CreateProductRequest
+	(*CreateProductReply)(nil),   // 2: terminator.api.system.v1.CreateProductReply
+	(*UpdateProductRequest)(nil), // 3: terminator.api.system.v1.UpdateProductRequest
+	(*UpdateProductReply)(nil),   // 4: terminator.api.system.v1.UpdateProductReply
+	(*DeleteProductRequest)(nil), // 5: terminator.api.system.v1.DeleteProductRequest
+	(*DeleteProductReply)(nil),   // 6: terminator.api.system.v1.DeleteProductReply
+	(*GetProductRequest)(nil),    // 7: terminator.api.system.v1.GetProductRequest
+	(*GetProductReply)(nil),      // 8: terminator.api.system.v1.GetProductReply
+	(*ListProductRequest)(nil),   // 9: terminator.api.system.v1.ListProductRequest
+	(*ListProductReply)(nil),     // 10: terminator.api.system.v1.ListProductReply
 }
 var file_api_system_v1_product_proto_depIdxs = []int32{
-	0,  // 0: terminator.api.system-service.v1.CreateProductReply.product:type_name -> terminator.api.system-service.v1.Product
-	0,  // 1: terminator.api.system-service.v1.UpdateProductReply.product:type_name -> terminator.api.system-service.v1.Product
-	0,  // 2: terminator.api.system-service.v1.GetProductReply.product:type_name -> terminator.api.system-service.v1.Product
-	0,  // 3: terminator.api.system-service.v1.ListProductReply.results:type_name -> terminator.api.system-service.v1.Product
-	1,  // 4: terminator.api.system-service.v1.ProductService.CreateProduct:input_type -> terminator.api.system-service.v1.CreateProductRequest
-	3,  // 5: terminator.api.system-service.v1.ProductService.UpdateProduct:input_type -> terminator.api.system-service.v1.UpdateProductRequest
-	5,  // 6: terminator.api.system-service.v1.ProductService.DeleteProduct:input_type -> terminator.api.system-service.v1.DeleteProductRequest
-	7,  // 7: terminator.api.system-service.v1.ProductService.GetProduct:input_type -> terminator.api.system-service.v1.GetProductRequest
-	9,  // 8: terminator.api.system-service.v1.ProductService.ListProduct:input_type -> terminator.api.system-service.v1.ListProductRequest
-	2,  // 9: terminator.api.system-service.v1.ProductService.CreateProduct:output_type -> terminator.api.system-service.v1.CreateProductReply
-	4,  // 10: terminator.api.system-service.v1.ProductService.UpdateProduct:output_type -> terminator.api.system-service.v1.UpdateProductReply
-	6,  // 11: terminator.api.system-service.v1.ProductService.DeleteProduct:output_type -> terminator.api.system-service.v1.DeleteProductReply
-	8,  // 12: terminator.api.system-service.v1.ProductService.GetProduct:output_type -> terminator.api.system-service.v1.GetProductReply
-	10, // 13: terminator.api.system-service.v1.ProductService.ListProduct:output_type -> terminator.api.system-service.v1.ListProductReply
+	0,  // 0: terminator.api.system.v1.CreateProductReply.product:type_name -> terminator.api.system.v1.Product
+	0,  // 1: terminator.api.system.v1.UpdateProductReply.product:type_name -> terminator.api.system.v1.Product
+	0,  // 2: terminator.api.system.v1.GetProductReply.product:type_name -> terminator.api.system.v1.Product
+	0,  // 3: terminator.api.system.v1.ListProductReply.results:type_name -> terminator.api.system.v1.Product
+	1,  // 4: terminator.api.system.v1.ProductService.CreateProduct:input_type -> terminator.api.system.v1.CreateProductRequest
+	3,  // 5: terminator.api.system.v1.ProductService.UpdateProduct:input_type -> terminator.api.system.v1.UpdateProductRequest
+	5,  // 6: terminator.api.system.v1.ProductService.DeleteProduct:input_type -> terminator.api.system.v1.DeleteProductRequest
+	7,  // 7: terminator.api.system.v1.ProductService.GetProduct:input_type -> terminator.api.system.v1.GetProductRequest
+	9,  // 8: terminator.api.system.v1.ProductService.ListProduct:input_type -> terminator.api.system.v1.ListProductRequest
+	2,  // 9: terminator.api.system.v1.ProductService.CreateProduct:output_type -> terminator.api.system.v1.CreateProductReply
+	4,  // 10: terminator.api.system.v1.ProductService.UpdateProduct:output_type -> terminator.api.system.v1.UpdateProductReply
+	6,  // 11: terminator.api.system.v1.ProductService.DeleteProduct:output_type -> terminator.api.system.v1.DeleteProductReply
+	8,  // 12: terminator.api.system.v1.ProductService.GetProduct:output_type -> terminator.api.system.v1.GetProductReply
+	10, // 13: terminator.api.system.v1.ProductService.ListProduct:output_type -> terminator.api.system.v1.ListProductReply
 	9,  // [9:14] is the sub-list for method output_type
 	4,  // [4:9] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name

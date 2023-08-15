@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.2
-// source: api/system-service/v1/user.proto
+// source: api/system/v1/user.proto
 
 package v1
 
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UserService_CreateUser_FullMethodName = "/terminator.api.system-service.v1.UserService/CreateUser"
-	UserService_UpdateUser_FullMethodName = "/terminator.api.system-service.v1.UserService/UpdateUser"
-	UserService_DeleteUser_FullMethodName = "/terminator.api.system-service.v1.UserService/DeleteUser"
-	UserService_GetUser_FullMethodName    = "/terminator.api.system-service.v1.UserService/GetUser"
-	UserService_ListUser_FullMethodName   = "/terminator.api.system-service.v1.UserService/ListUser"
+	UserService_CreateUser_FullMethodName = "/terminator.api.system.v1.UserService/CreateUser"
+	UserService_UpdateUser_FullMethodName = "/terminator.api.system.v1.UserService/UpdateUser"
+	UserService_DeleteUser_FullMethodName = "/terminator.api.system.v1.UserService/DeleteUser"
+	UserService_GetUser_FullMethodName    = "/terminator.api.system.v1.UserService/GetUser"
+	UserService_ListUser_FullMethodName   = "/terminator.api.system.v1.UserService/ListUser"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -228,7 +228,7 @@ func _UserService_ListUser_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "terminator.api.system-service.v1.UserService",
+	ServiceName: "terminator.api.system.v1.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -253,5 +253,5 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/system-service/v1/user.proto",
+	Metadata: "api/system/v1/user.proto",
 }
