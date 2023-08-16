@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"errors"
 	"github.com/liang21/terminator/pkg/pagination"
 	"time"
 )
@@ -34,4 +35,54 @@ type TestModuleRepo interface {
 
 type TestModuleUsecase struct {
 	repo TestModuleRepo
+}
+
+func NewTestModuleUsecase(repo TestModuleRepo) *TestModuleUsecase {
+	return &TestModuleUsecase{repo: repo}
+}
+
+func (uc *TestModuleUsecase) List(ctx context.Context, meta pagination.ListMeta) (module *TestModuleDTOList, err error) {
+	module, err = uc.repo.ListTestModule(ctx, meta)
+	if err != nil {
+		return
+	}
+	return module, nil
+}
+
+func (uc *TestModuleUsecase) Get(ctx context.Context, id int64) (module *TestModule, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	module, err = uc.repo.GetTestModule(ctx, id)
+	if err != nil {
+		return
+	}
+	return module, nil
+}
+
+func (uc *TestModuleUsecase) Create(ctx context.Context, module *TestModule) (err error) {
+	if err = uc.repo.CreateTestModule(ctx, module); err != nil {
+		return err
+	}
+	return
+}
+
+func (uc *TestModuleUsecase) Update(ctx context.Context, id int64, module *TestModule) (err error) {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err = uc.repo.UpdateTestModule(ctx, id, module); err != nil {
+		return err
+	}
+	return
+}
+
+func (uc *TestModuleUsecase) Delete(ctx context.Context, id int64) (err error) {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err = uc.repo.DeleteTestModule(ctx, id); err != nil {
+		return err
+	}
+	return
 }

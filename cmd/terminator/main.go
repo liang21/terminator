@@ -11,10 +11,14 @@ import (
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	v1 "github.com/liang21/terminator/api/system/v1"
-	"github.com/liang21/terminator/internal/system-service/biz"
-	"github.com/liang21/terminator/internal/system-service/repo"
-	service "github.com/liang21/terminator/internal/system-service/service"
+	system_v1 "github.com/liang21/terminator/api/system/v1"
+	test_v1 "github.com/liang21/terminator/api/test/v1"
+	systemBiz "github.com/liang21/terminator/internal/system-service/biz"
+	systemRepo "github.com/liang21/terminator/internal/system-service/repo"
+	systemService "github.com/liang21/terminator/internal/system-service/service"
+	testBiz "github.com/liang21/terminator/internal/test-service/biz"
+	testRepo "github.com/liang21/terminator/internal/test-service/repo"
+	testService "github.com/liang21/terminator/internal/test-service/service"
 	"github.com/liang21/terminator/pkg/file"
 	"github.com/liang21/terminator/pkg/log"
 	"github.com/liang21/terminator/pkg/options"
@@ -60,6 +64,9 @@ func main() {
 		log.Fatalf("init mysql failed!", err)
 	}
 
+	// grpc client
+	cc, err := grpc.Dial(bs.GRPC.Addr, grpc.WithInsecure())
+
 	lis, err := net.Listen("tcp", bs.GRPC.Addr)
 	if err != nil {
 		log.Fatalf("init listen grpc failed!", err)
@@ -75,20 +82,26 @@ func main() {
 			)))
 	// TODO: 注册服务
 	// user service
-	userRepo := repo.NewUserRepo(engine, rdb)
-	userUsecase := biz.NewUserUsecase(userRepo)
-	userService := service.NewUserService(userUsecase)
-	v1.RegisterUserServiceServer(s, userService)
+	userRepo := systemRepo.NewUserRepo(engine, rdb)
+	userUsecase := systemBiz.NewUserUsecase(userRepo)
+	userService := systemService.NewUserService(userUsecase)
+	system_v1.RegisterUserServiceServer(s, userService)
 	// product service
-	productRepo := repo.NewProductRepo(engine, rdb)
-	productUsecase := biz.NewProductUsecase(productRepo)
-	productService := service.NewProductService(productUsecase)
-	v1.RegisterProductServiceServer(s, productService)
+	productRepo := systemRepo.NewProductRepo(engine, rdb)
+	productUsecase := systemBiz.NewProductUsecase(productRepo)
+	productService := systemService.NewProductService(productUsecase)
+	system_v1.RegisterProductServiceServer(s, productService)
 	// project service
-	projectRepo := repo.NewProjectRepo(engine, rdb)
-	projectUsecase := biz.NewProjectUsecase(projectRepo, productRepo)
-	projectService := service.NewProjectService(projectUsecase)
-	v1.RegisterProjectServiceServer(s, projectService)
+	projectRepo := systemRepo.NewProjectRepo(engine, rdb)
+	projectUsecase := systemBiz.NewProjectUsecase(projectRepo, productRepo)
+	projectService := systemService.NewProjectService(projectUsecase)
+	system_v1.RegisterProjectServiceServer(s, projectService)
+	//module service
+	moduleRepo := testRepo.NewTestModuleRepo(engine, rdb)
+	moduleUsecase := testBiz.NewTestModuleUsecase(moduleRepo)
+	moduleService := testService.NewTestModuleService(cc, moduleUsecase)
+	test_v1.RegisterTestModuleServiceServer(s, moduleService)
+	// 启动grpc服务
 	go func() {
 		if err := s.Serve(lis); err != nil {
 			log.Fatalf("start grpc service failed!", err)
@@ -115,13 +128,16 @@ func main() {
 	rpcPort := rpcS[1]
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
 	// 注册服务
-	if err := v1.RegisterUserServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+	if err := system_v1.RegisterUserServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
 		log.Fatalf("register service failed!", err)
 	}
-	if err := v1.RegisterProductServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+	if err := system_v1.RegisterProductServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
 		log.Fatalf("register service failed!", err)
 	}
-	if err := v1.RegisterProjectServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+	if err := system_v1.RegisterProjectServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+		log.Fatalf("register service failed!", err)
+	}
+	if err := test_v1.RegisterTestModuleServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
 		log.Fatalf("register service failed!", err)
 	}
 	gin.SetMode(gin.ReleaseMode)

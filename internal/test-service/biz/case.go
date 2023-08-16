@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"errors"
 	"github.com/liang21/terminator/pkg/pagination"
 )
 
@@ -41,6 +42,10 @@ type TestCaseUsecase struct {
 	repo TestCaseRepo
 }
 
+func NewTestCaseUsecase(repo TestCaseRepo) *TestCaseUsecase {
+	return &TestCaseUsecase{repo: repo}
+}
+
 type TestCaseRepo interface {
 	// ListTestCase db
 	ListTestCase(ctx context.Context, meta pagination.ListMeta) (TestCaseDto *TestCaseDTOList, err error)
@@ -48,4 +53,50 @@ type TestCaseRepo interface {
 	CreateTestCase(ctx context.Context, TestCase *TestCase) error
 	UpdateTestCase(ctx context.Context, id int64, TestCase *TestCase) error
 	DeleteTestCase(ctx context.Context, id int64) error
+}
+
+func (uc *TestCaseUsecase) List(ctx context.Context, meta pagination.ListMeta) (testcase *TestCaseDTOList, err error) {
+	testcase, err = uc.repo.ListTestCase(ctx, meta)
+	if err != nil {
+		return
+	}
+	return testcase, nil
+}
+
+func (uc *TestCaseUsecase) Get(ctx context.Context, id int64) (testcase *TestCase, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	testcase, err = uc.repo.GetTestCase(ctx, id)
+	if err != nil {
+		return
+	}
+	return testcase, nil
+}
+
+func (uc *TestCaseUsecase) Create(ctx context.Context, testcase *TestCase) (err error) {
+	if err = uc.repo.CreateTestCase(ctx, testcase); err != nil {
+		return err
+	}
+	return
+}
+
+func (uc *TestCaseUsecase) Update(ctx context.Context, id int64, testcase *TestCase) (err error) {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err = uc.repo.UpdateTestCase(ctx, id, testcase); err != nil {
+		return err
+	}
+	return
+}
+
+func (uc *TestCaseUsecase) Delete(ctx context.Context, id int64) (err error) {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err = uc.repo.DeleteTestCase(ctx, id); err != nil {
+		return err
+	}
+	return
 }

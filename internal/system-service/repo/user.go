@@ -75,7 +75,7 @@ func (u *userRepo) DeleteUser(ctx context.Context, id int64) error {
 		return err
 	}
 	if result == 0 {
-		return errors.New("user not found")
+		return errors.New("user delete failed")
 	}
 	return nil
 }

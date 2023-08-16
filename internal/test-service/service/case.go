@@ -2,13 +2,16 @@ package service
 
 import (
 	"context"
+	project_v1 "github.com/liang21/terminator/api/system/v1"
 	v1 "github.com/liang21/terminator/api/test/v1"
 	"github.com/liang21/terminator/internal/test-service/biz"
 )
 
 type TestCaseService struct {
 	v1.UnimplementedTestCaseServiceServer
-	testCase *biz.TestCaseUsecase
+	testCase      *biz.TestCaseUsecase
+	moduleClient  *v1.TestModuleServiceClient
+	projectClient *project_v1.ProjectServiceClient
 }
 
 func NewTestCaseService(testCase *biz.TestCaseUsecase) *TestCaseService {
@@ -16,6 +19,9 @@ func NewTestCaseService(testCase *biz.TestCaseUsecase) *TestCaseService {
 }
 
 func (s *TestCaseService) CreateTestCase(ctx context.Context, req *v1.CreateTestCaseRequest) (*v1.CreateTestCaseReply, error) {
+	if err := s.testCase.Create(ctx, &biz.TestCase{Name: req.GetName(), ModuleId: req.GetModuleId()}); err != nil {
+		return nil, err
+	}
 	return &v1.CreateTestCaseReply{}, nil
 }
 
