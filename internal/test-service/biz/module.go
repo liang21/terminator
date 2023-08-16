@@ -31,3 +31,7 @@ type TestModuleRepo interface {
 	UpdateTestModule(ctx context.Context, id int64, TestModule *TestModule) error
 	DeleteTestModule(ctx context.Context, id int64) error
 }
+
+type TestModuleUsecase struct {
+	repo TestModuleRepo
+}

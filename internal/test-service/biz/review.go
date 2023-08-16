@@ -94,3 +94,11 @@ type ReviewRepo interface {
 	TestReviewCaseRepo
 	TestReviewReportRepo
 }
+
+type ReviewUsecase struct {
+	repo ReviewRepo
+}
+
+func NewReviewUsecase(repo ReviewRepo) *ReviewUsecase {
+	return &ReviewUsecase{repo: repo}
+}

@@ -37,6 +37,10 @@ func (u TestCase) TableName() string {
 	return "TestCase"
 }
 
+type TestCaseUsecase struct {
+	repo TestCaseRepo
+}
+
 type TestCaseRepo interface {
 	// ListTestCase db
 	ListTestCase(ctx context.Context, meta pagination.ListMeta) (TestCaseDto *TestCaseDTOList, err error)

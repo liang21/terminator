@@ -102,3 +102,7 @@ type PlanRepo interface {
 	TestPlanCaseRepo
 	TestPlanReportRepo
 }
+
+type PlanUsecase struct {
+	repo PlanRepo
+}
