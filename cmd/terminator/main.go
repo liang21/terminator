@@ -101,6 +101,11 @@ func main() {
 	moduleUsecase := testBiz.NewTestModuleUsecase(moduleRepo)
 	moduleService := testService.NewTestModuleService(cc, moduleUsecase)
 	test_v1.RegisterTestModuleServiceServer(s, moduleService)
+	//testcase service
+	testcaseRepo := testRepo.NewTestCaseRepo(engine, rdb)
+	testcaseUsecase := testBiz.NewTestCaseUsecase(testcaseRepo)
+	testcaseService := testService.NewTestCaseService(cc, testcaseUsecase)
+	test_v1.RegisterTestCaseServiceServer(s, testcaseService)
 	// 启动grpc服务
 	go func() {
 		if err := s.Serve(lis); err != nil {
@@ -138,6 +143,9 @@ func main() {
 		log.Fatalf("register service failed!", err)
 	}
 	if err := test_v1.RegisterTestModuleServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
+		log.Fatalf("register service failed!", err)
+	}
+	if err := test_v1.RegisterTestCaseServiceHandlerFromEndpoint(context.Background(), mux, "localhost:"+rpcPort, opts); err != nil {
 		log.Fatalf("register service failed!", err)
 	}
 	gin.SetMode(gin.ReleaseMode)

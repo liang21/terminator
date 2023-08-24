@@ -47,11 +47,11 @@ func (m testModuletRepo) GetTestModule(ctx context.Context, id int64) (*biz.Test
 }
 
 func (m testModuletRepo) CreateTestModule(ctx context.Context, module *biz.TestModule) error {
-	redult, err := m.db.Insert(module)
+	result, err := m.db.Insert(module)
 	if err != nil {
 		return err
 	}
-	if redult == 0 {
+	if result == 0 {
 		return errors.New("test module create failed")
 	}
 	return nil

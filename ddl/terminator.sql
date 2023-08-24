@@ -11,7 +11,7 @@
  Target Server Version : 101102
  File Encoding         : 65001
 
- Date: 16/08/2023 17:20:39
+ Date: 16/08/2023 21:18:18
 */
 
 SET NAMES utf8mb4;
@@ -246,7 +246,7 @@ CREATE TABLE `test_case`  (
   `review_status` int NULL DEFAULT NULL COMMENT '评审结果',
   `status` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用例状态',
   `step_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `expected_result` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `step_expected_result` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `create_user` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `original_status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '初始状态',
   `last_execute_result` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '最近一次的测试计划的执行结果',
@@ -254,7 +254,7 @@ CREATE TABLE `test_case`  (
   `create_at` datetime NOT NULL COMMENT 'Create timestamp',
   `update_at` datetime NOT NULL COMMENT 'Update timestamp',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for test_module
@@ -268,7 +268,7 @@ CREATE TABLE `test_module`  (
   `create_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_at` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for test_plan

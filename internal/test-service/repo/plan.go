@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"errors"
 	"github.com/liang21/terminator/internal/test-service/biz"
 	"github.com/liang21/terminator/pkg/pagination"
 	"github.com/redis/go-redis/v9"
@@ -20,58 +21,134 @@ func NewTestPlanRepo(db *xorm.Engine, rdb *redis.Client) biz.PlanRepo {
 	}
 }
 func (p planRepo) ListTestPlan(ctx context.Context, meta pagination.ListMeta) (TestPlanDto *biz.TestPlanDTOList, err error) {
-	//TODO implement me
-	panic("implement me")
+	var testPlans []*biz.TestPlan
+	offset := pagination.GetPageOffset(meta.PageSize, meta.PageToken)
+	count, err := p.db.Limit(int(meta.PageSize), int(offset)).Desc("name").And("deleted = ?", 0).FindAndCount(&testPlans)
+	if err != nil {
+		return nil, err
+	}
+	testPlanDtoList := &biz.TestPlanDTOList{}
+	testPlanDtoList.TotalCount = count
+	testPlanDtoList.Items = testPlans
+	return testPlanDtoList, nil
 }
 
 func (p planRepo) GetTestPlan(ctx context.Context, id int64) (*biz.TestPlan, error) {
-	//TODO implement me
-	panic("implement me")
+	testPlan := &biz.TestPlan{Deleted: 0}
+	ok, err := p.db.Where("id = ?", id).Get(testPlan)
+	if err != nil {
+		return nil, err
+	}
+	if !ok {
+		return nil, errors.New("test plan not found")
+	}
+	return testPlan, nil
 }
 
-func (p planRepo) CreateTestPlan(ctx context.Context, TestPlan *biz.TestPlan) error {
-	//TODO implement me
-	panic("implement me")
+func (p planRepo) CreateTestPlan(ctx context.Context, testPlan *biz.TestPlan) error {
+	result, err := p.db.Insert(testPlan)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan create failed")
+	}
+	return nil
 }
 
-func (p planRepo) UpdateTestPlan(ctx context.Context, id int64, TestPlan *biz.TestPlan) error {
-	//TODO implement me
-	panic("implement me")
+func (p planRepo) UpdateTestPlan(ctx context.Context, id int64, testPlan *biz.TestPlan) error {
+	result, err := p.db.Where("id = ?", id).Update(testPlan)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan update failed")
+	}
+	return nil
 }
 
 func (p planRepo) DeleteTestPlan(ctx context.Context, id int64) error {
-	//TODO implement me
-	panic("implement me")
+	testPlan := &biz.TestPlan{Deleted: 1}
+	result, err := p.db.Where("id = ?", id).Update(testPlan)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan delete failed")
+	}
+	return nil
 }
 
 func (p planRepo) ListTestPlanCase(ctx context.Context, meta pagination.ListMeta) (TestPlanCaseDto *biz.TestPlanCaseDTOList, err error) {
-	//TODO implement me
-	panic("implement me")
+	var testPlanCases []*biz.TestPlanCase
+	offset := pagination.GetPageOffset(meta.PageSize, meta.PageToken)
+	count, err := p.db.Limit(int(meta.PageSize), int(offset)).Desc("name").And("deleted = ?", 0).FindAndCount(&testPlanCases)
+	if err != nil {
+		return nil, err
+	}
+	testPlanCaseDtoList := &biz.TestPlanCaseDTOList{}
+	testPlanCaseDtoList.TotalCount = count
+	testPlanCaseDtoList.Items = testPlanCases
+	return testPlanCaseDtoList, nil
 }
 
 func (p planRepo) GetTestPlanCase(ctx context.Context, id int64) (*biz.TestPlanCase, error) {
-	//TODO implement me
-	panic("implement me")
+	planCase := &biz.TestPlanCase{}
+	ok, err := p.db.Where("id = ?", id).Get(planCase)
+	if err != nil {
+		return nil, err
+	}
+	if !ok {
+		return nil, errors.New("test plan case not found")
+	}
+	return planCase, nil
 }
 
-func (p planRepo) CreateTestPlanCase(ctx context.Context, TestPlanCase *biz.TestPlanCase) error {
-	//TODO implement me
-	panic("implement me")
+func (p planRepo) CreateTestPlanCase(ctx context.Context, planCase *biz.TestPlanCase) error {
+	result, err := p.db.Insert(planCase)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan case create failed")
+	}
+	return nil
 }
 
-func (p planRepo) UpdateTestPlanCase(ctx context.Context, id int64, TestPlanCase *biz.TestPlanCase) error {
-	//TODO implement me
-	panic("implement me")
+func (p planRepo) UpdateTestPlanCase(ctx context.Context, id int64, planCase *biz.TestPlanCase) error {
+	result, err := p.db.Where("id = ?", id).Update(planCase)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan case update failed")
+	}
+	return nil
 }
 
 func (p planRepo) DeleteTestPlanCase(ctx context.Context, id int64) error {
-	//TODO implement me
-	panic("implement me")
+	planCase := &biz.TestPlanCase{Deleted: 1}
+	result, err := p.db.Where("id = ?", id).Update(planCase)
+	if err != nil {
+		return err
+	}
+	if result == 0 {
+		return errors.New("test plan case delete failed")
+	}
+	return nil
 }
 
 func (p planRepo) ListTestPlanReport(ctx context.Context, meta pagination.ListMeta) (TestPlanReportDto *biz.TestPlanReportDTOList, err error) {
-	//TODO implement me
-	panic("implement me")
+	var testPlanReports []*biz.TestPlanReport
+	offset := pagination.GetPageOffset(meta.PageSize, meta.PageToken)
+	count, err := p.db.Limit(int(meta.PageSize), int(offset)).Desc("name").And("deleted = ?", 0).FindAndCount(&testPlanReports)
+	if err != nil {
+		return nil, err
+	}
+	testPlanReportDtoList := &biz.TestPlanReportDTOList{}
+	testPlanReportDtoList.TotalCount = count
+	testPlanReportDtoList.Items = testPlanReports
+	return testPlanReportDtoList, nil
 }
 
 func (p planRepo) GetTestPlanReport(ctx context.Context, id int64) (*biz.TestPlanReport, error) {

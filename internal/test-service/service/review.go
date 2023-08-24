@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	project_v1 "github.com/liang21/terminator/api/system/v1"
 	v1 "github.com/liang21/terminator/api/test/v1"
 	"github.com/liang21/terminator/internal/test-service/biz"
 )
@@ -10,7 +11,8 @@ type ReviewService struct {
 	v1.UnimplementedTestReviewServiceServer
 	v1.UnimplementedTestReviewCaseServiceServer
 	v1.UnimplementedTestReviewReportServiceServer
-	review *biz.ReviewUsecase
+	review        *biz.ReviewUsecase
+	projectClient project_v1.ProjectServiceClient
 }
 
 func NewReviewService(review *biz.ReviewUsecase) *ReviewService {
@@ -18,6 +20,12 @@ func NewReviewService(review *biz.ReviewUsecase) *ReviewService {
 }
 
 func (s *ReviewService) CreateReview(ctx context.Context, req *v1.CreateTestReviewRequest) (*v1.CreateTestReviewReply, error) {
+	if _, err := s.projectClient.GetProject(ctx, &project_v1.GetProjectRequest{Id: req.GetProjectId()}); err != nil {
+		return nil, err
+	}
+	if err := s.review.CreateReview(ctx, &biz.TestReview{Name: req.GetName(), ProjectId: req.GetProjectId(), Status: req.GetStatus(), Description: req.GetDescription(), ReviewedEndAt: req.GetReviewedStartAt().AsTime()}); err != nil {
+		return nil, err
+	}
 	return &v1.CreateTestReviewReply{}, nil
 }
 

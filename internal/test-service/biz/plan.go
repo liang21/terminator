@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"errors"
 	"github.com/liang21/terminator/pkg/pagination"
 	"time"
 )
@@ -64,8 +65,8 @@ type TestPlanCaseRepo interface {
 	// ListTestPlanCase db
 	ListTestPlanCase(ctx context.Context, meta pagination.ListMeta) (TestPlanCaseDto *TestPlanCaseDTOList, err error)
 	GetTestPlanCase(ctx context.Context, id int64) (*TestPlanCase, error)
-	CreateTestPlanCase(ctx context.Context, TestPlanCase *TestPlanCase) error
-	UpdateTestPlanCase(ctx context.Context, id int64, TestPlanCase *TestPlanCase) error
+	CreateTestPlanCase(ctx context.Context, planCase *TestPlanCase) error
+	UpdateTestPlanCase(ctx context.Context, id int64, planCase *TestPlanCase) error
 	DeleteTestPlanCase(ctx context.Context, id int64) error
 }
 
@@ -105,4 +106,146 @@ type PlanRepo interface {
 
 type PlanUsecase struct {
 	repo PlanRepo
+}
+
+func NewPlanUsecase(repo PlanRepo) *PlanUsecase {
+	return &PlanUsecase{repo: repo}
+}
+
+func (uc *PlanUsecase) ListPlan(ctx context.Context, meta pagination.ListMeta) (plan *TestPlanDTOList, err error) {
+	plan, err = uc.repo.ListTestPlan(ctx, meta)
+	if err != nil {
+		return
+	}
+	return plan, nil
+}
+
+func (uc *PlanUsecase) GetPlanById(ctx context.Context, id int64) (plan *TestPlan, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	plan, err = uc.repo.GetTestPlan(ctx, id)
+	if err != nil {
+		return
+	}
+	return plan, nil
+}
+
+func (uc *PlanUsecase) CreatePlan(ctx context.Context, plan *TestPlan) error {
+	if err := uc.repo.CreateTestPlan(ctx, plan); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) UpdatePlan(ctx context.Context, id int64, plan *TestPlan) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.UpdateTestPlan(ctx, id, plan); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) DeletePlan(ctx context.Context, id int64) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.DeleteTestPlan(ctx, id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) ListPlanCase(ctx context.Context, meta pagination.ListMeta) (planCase *TestPlanCaseDTOList, err error) {
+	planCase, err = uc.repo.ListTestPlanCase(ctx, meta)
+	if err != nil {
+		return
+	}
+	return planCase, nil
+}
+
+func (uc *PlanUsecase) GetPlanCaseById(ctx context.Context, id int64) (planCase *TestPlanCase, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	planCase, err = uc.repo.GetTestPlanCase(ctx, id)
+	if err != nil {
+		return
+	}
+	return planCase, nil
+}
+
+func (uc *PlanUsecase) CreatePlanCase(ctx context.Context, planCase *TestPlanCase) error {
+	if err := uc.repo.CreateTestPlanCase(ctx, planCase); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) UpdatePlanCase(ctx context.Context, id int64, planCase *TestPlanCase) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.UpdateTestPlanCase(ctx, id, planCase); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) DeletePlanCase(ctx context.Context, id int64) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.DeleteTestPlanCase(ctx, id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) ListPlanReport(ctx context.Context, meta pagination.ListMeta) (planReport *TestPlanReportDTOList, err error) {
+	planReport, err = uc.repo.ListTestPlanReport(ctx, meta)
+	if err != nil {
+		return
+	}
+	return planReport, nil
+}
+
+func (uc *PlanUsecase) GetPlanReportById(ctx context.Context, id int64) (planReport *TestPlanReport, err error) {
+	if id == 0 {
+		return nil, errors.New("id is empty")
+	}
+	planReport, err = uc.repo.GetTestPlanReport(ctx, id)
+	if err != nil {
+		return
+	}
+	return planReport, nil
+}
+
+func (uc *PlanUsecase) CreatePlanReport(ctx context.Context, planReport *TestPlanReport) error {
+	if err := uc.repo.CreateTestPlanReport(ctx, planReport); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) UpdatePlanReport(ctx context.Context, id int64, planReport *TestPlanReport) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.UpdateTestPlanReport(ctx, id, planReport); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (uc *PlanUsecase) DeletePlanReport(ctx context.Context, id int64) error {
+	if id == 0 {
+		return errors.New("id is empty")
+	}
+	if err := uc.repo.DeleteTestPlanReport(ctx, id); err != nil {
+		return err
+	}
+	return nil
 }
