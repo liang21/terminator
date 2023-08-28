@@ -72,11 +72,11 @@ func (m *TestReview) validate(all bool) error {
 	// no validation rules for ReviewPassRule
 
 	if all {
-		switch v := interface{}(m.GetReviewedStartAt()).(type) {
+		switch v := interface{}(m.GetReviewedEndAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, TestReviewValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -84,16 +84,16 @@ func (m *TestReview) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, TestReviewValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetReviewedStartAt()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetReviewedEndAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return TestReviewValidationError{
-				field:  "ReviewedStartAt",
+				field:  "ReviewedEndAt",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -217,11 +217,11 @@ func (m *CreateTestReviewRequest) validate(all bool) error {
 	// no validation rules for Description
 
 	if all {
-		switch v := interface{}(m.GetReviewedStartAt()).(type) {
+		switch v := interface{}(m.GetReviewedEndAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, CreateTestReviewRequestValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -229,16 +229,16 @@ func (m *CreateTestReviewRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, CreateTestReviewRequestValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetReviewedStartAt()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetReviewedEndAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateTestReviewRequestValidationError{
-				field:  "ReviewedStartAt",
+				field:  "ReviewedEndAt",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -507,11 +507,11 @@ func (m *UpdateTestReviewRequest) validate(all bool) error {
 	// no validation rules for Description
 
 	if all {
-		switch v := interface{}(m.GetReviewedStartAt()).(type) {
+		switch v := interface{}(m.GetReviewedEndAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, UpdateTestReviewRequestValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -519,16 +519,16 @@ func (m *UpdateTestReviewRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, UpdateTestReviewRequestValidationError{
-					field:  "ReviewedStartAt",
+					field:  "ReviewedEndAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetReviewedStartAt()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetReviewedEndAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return UpdateTestReviewRequestValidationError{
-				field:  "ReviewedStartAt",
+				field:  "ReviewedEndAt",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1563,11 +1563,11 @@ func (m *CreateTestReviewCaseRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PlanId
+	// no validation rules for ReviewId
 
 	// no validation rules for CaseId
 
-	// no validation rules for Result
+	// no validation rules for Status
 
 	if len(errors) > 0 {
 		return CreateTestReviewCaseRequestMultiError(errors)
@@ -1814,11 +1814,11 @@ func (m *UpdateTestReviewCaseRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for PlanId
+	// no validation rules for ReviewId
 
 	// no validation rules for CaseId
 
-	// no validation rules for Result
+	// no validation rules for Status
 
 	if len(errors) > 0 {
 		return UpdateTestReviewCaseRequestMultiError(errors)
@@ -2744,13 +2744,9 @@ func (m *TestReviewReport) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for TestPlanId
+	// no validation rules for ProjectId
 
 	// no validation rules for Name
-
-	// no validation rules for Status
-
-	// no validation rules for Success
 
 	if len(errors) > 0 {
 		return TestReviewReportMultiError(errors)

@@ -254,7 +254,7 @@ CREATE TABLE `test_case`  (
   `create_at` datetime NOT NULL COMMENT 'Create timestamp',
   `update_at` datetime NOT NULL COMMENT 'Update timestamp',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for test_module

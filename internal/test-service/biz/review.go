@@ -113,7 +113,7 @@ func (uc *ReviewUsecase) ListReview(ctx context.Context, meta pagination.ListMet
 	return testreview, nil
 }
 
-func (uc *ReviewUsecase) GetReview(ctx context.Context, id int64) (testReview *TestReview, err error) {
+func (uc *ReviewUsecase) GetReviewById(ctx context.Context, id int64) (testReview *TestReview, err error) {
 	if id == 0 {
 		return nil, errors.New("id is empty")
 	}
@@ -159,7 +159,7 @@ func (uc *ReviewUsecase) ListReviewCase(ctx context.Context, meta pagination.Lis
 	return testReviewCase, nil
 }
 
-func (uc *ReviewUsecase) GetReviewCase(ctx context.Context, id int64) (testReviewCase *TestReviewCase, err error) {
+func (uc *ReviewUsecase) GetReviewCaseById(ctx context.Context, id int64) (testReviewCase *TestReviewCase, err error) {
 	if id == 0 {
 		return nil, errors.New("id is empty")
 	}

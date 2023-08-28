@@ -56,7 +56,7 @@ message TestReview {
   string description = 5;
   int64 review_total = 6;
   int64 review_pass_rule = 7;
-  google.protobuf.Timestamp reviewed_start_at = 9;
+  google.protobuf.Timestamp reviewed_end_at = 9;
 }
 
 message CreateTestReviewRequest {
@@ -64,7 +64,7 @@ message CreateTestReviewRequest {
   string name = 2 [(validate.rules).string = {min_len: 1, max_len: 50}];
   string status = 3;
   string description = 4;
-  google.protobuf.Timestamp reviewed_start_at = 5;
+  google.protobuf.Timestamp reviewed_end_at = 5;
 }
 
 message CreateTestReviewReply {
@@ -77,7 +77,7 @@ message UpdateTestReviewRequest {
   string name = 3 [(validate.rules).string = {min_len: 1, max_len: 50}];
   string status = 4;
   string description = 5;
-  google.protobuf.Timestamp reviewed_start_at = 6;
+  google.protobuf.Timestamp reviewed_end_at = 6;
 }
 
 message UpdateTestReviewReply {
@@ -147,9 +147,9 @@ message TestReviewCase {
 }
 
 message CreateTestReviewCaseRequest {
-  int64 plan_id = 1;
+  int64 review_id = 1;
   int64 case_id = 2;
-  string result = 3;
+  string status = 3;
 }
 
 message CreateTestReviewCaseReply {
@@ -158,9 +158,9 @@ message CreateTestReviewCaseReply {
 
 message UpdateTestReviewCaseRequest {
   int64 id = 1 [(validate.rules).int64 = {gt: 0}];
-  int64 plan_id = 2;
+  int64 review_id = 2;
   int64 case_id = 3;
-  string result = 4;
+  string status = 4;
 }
 
 message UpdateTestReviewCaseReply {
@@ -202,10 +202,8 @@ service TestReviewReportService {
 
 message TestReviewReport {
   int64 id = 1;
-  int64 test_plan_id = 2;
+  int64 project_id = 2;
   string name = 3;
-  string status = 4;
-  uint32 success = 5;
 }
 
 
